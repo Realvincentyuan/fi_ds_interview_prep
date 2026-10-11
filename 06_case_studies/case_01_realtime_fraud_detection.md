@@ -13,31 +13,31 @@ Design an end-to-end Machine Learning System to evaluate payment authorization r
 
 ```mermaid
 flowchart TD
-    subgraph Client & Ingestion Layer
-        Txn[Auth Request: ISO 8583 / JSON] --> Edge[API Gateway / Load Balancer]
-        Edge --> RuleEngine[Tier 1: Deterministic Rule Engine < 5ms<br/>IP blacklist, Sanctions, velocity circuit breaker]
+    subgraph Ingestion ["Client & Ingestion Layer"]
+        Txn["Auth Request: ISO 8583 / JSON"] --> Edge["API Gateway / Load Balancer"]
+        Edge --> RuleEngine["Tier 1: Deterministic Rule Engine (under 5ms)<br/>IP blacklist, Sanctions, velocity circuit breaker"]
     end
 
-    subgraph Feature Serving Layer
-        RuleEngine -->|Pass| FeatureWorker[Feature Orchestrator]
-        FeatureWorker --> Cache[(In-Memory Redis Cluster: < 10ms<br/>User velocity, device history, entity graph counters)]
+    subgraph FeatureServing ["Feature Serving Layer"]
+        RuleEngine -->|"Pass"| FeatureWorker["Feature Orchestrator"]
+        FeatureWorker --> Cache[("In-Memory Redis Cluster (under 10ms)<br/>User velocity, device history, entity graph counters")]
     end
 
-    subgraph Inference & Decision Layer
-        FeatureWorker --> ModelService[Triton Inference Server: < 20ms<br/>ONNX-optimized LightGBM Model]
-        ModelService --> DecisionEngine[Policy & Threshold Decider]
-        DecisionEngine -->|Risk < 0.15| Approve[Approve Auth]
-        DecisionEngine -->|0.15 <= Risk < 0.70| Challenge[Step-Up Auth: 3DS 2.0]
-        DecisionEngine -->|Risk >= 0.70| Decline[Decline Auth]
+    subgraph InferenceDecision ["Inference & Decision Layer"]
+        FeatureWorker --> ModelService["Triton Inference Server (under 20ms)<br/>ONNX-optimized LightGBM Model"]
+        ModelService --> DecisionEngine["Policy & Threshold Decider"]
+        DecisionEngine -->|"Risk under 0.15"| Approve["Approve Auth"]
+        DecisionEngine -->|"0.15 to 0.70"| Challenge["Step-Up Auth: 3DS 2.0"]
+        DecisionEngine -->|"Risk over 0.70"| Decline["Decline Auth"]
     end
 
-    subgraph Asynchronous Streaming & Training
-        Edge -.-> Kafka[Kafka Topic: payment-events]
-        Kafka -.-> Flink[Apache Flink: Sliding Window Aggregators]
+    subgraph StreamingTraining ["Asynchronous Streaming & Training"]
+        Edge -.-> Kafka["Kafka Topic: payment-events"]
+        Kafka -.-> Flink["Apache Flink: Sliding Window Aggregators"]
         Flink -.-> Cache
-        Kafka -.-> Datalake[(Iceberg / BigQuery Feature Store)]
-        Datalake -.-> Retrain[Offline Batch Training & Validation Pipeline]
-        Retrain -.-> ModelRegistry[MLflow Model Registry]
+        Kafka -.-> Datalake[("Iceberg / BigQuery Feature Store")]
+        Datalake -.-> Retrain["Offline Batch Training & Validation Pipeline"]
+        Retrain -.-> ModelRegistry["MLflow Model Registry"]
         ModelRegistry -.-> ModelService
     end
 ```

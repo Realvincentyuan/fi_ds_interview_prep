@@ -38,20 +38,20 @@ Wise’s Singapore office acts as the **central operational, product, and engine
 
 ```mermaid
 flowchart TD
-    User[Wise User / Business] --> WiseCore[Wise Netting & Liquidity Engine]
+    User["Wise User / Business"] --> WiseCore["Wise Netting & Liquidity Engine"]
     
-    subgraph Direct APAC Payment Rails
-        WiseCore -->|Singapore| FAST[FAST / PayNow: Real-Time Non-Bank Direct]
-        WiseCore -->|Malaysia| DuitNow[DuitNow: Direct via PayNet]
-        WiseCore -->|Australia| NPP[NPP: New Payments Platform Direct]
-        WiseCore -->|Thailand| PromptPay[PromptPay: Instant via Mobile/Citizen ID + QR]
-        WiseCore -->|India| UPI[UPI: Inbound Inward Remittance]
-        WiseCore -->|Indonesia| BIFAST[BI-FAST: Real-time Bank Transfers]
-        WiseCore -->|Japan| Zengin[Zengin Network: 24/7 Domestic Rail]
+    subgraph Rails ["Direct APAC Payment Rails"]
+        WiseCore -->|"Singapore"| FAST["FAST / PayNow: Real-Time Non-Bank Direct"]
+        WiseCore -->|"Malaysia"| DuitNow["DuitNow: Direct via PayNet"]
+        WiseCore -->|"Australia"| NPP["NPP: New Payments Platform Direct"]
+        WiseCore -->|"Thailand"| PromptPay["PromptPay: Instant via Mobile/Citizen ID + QR"]
+        WiseCore -->|"India"| UPI["UPI: Inbound Inward Remittance"]
+        WiseCore -->|"Indonesia"| BIFAST["BI-FAST: Real-Time Bank Transfers"]
+        WiseCore -->|"Japan"| Zengin["Zengin Network: 24/7 Domestic Rail"]
     end
     
-    subgraph B2B Distribution: Wise Platform
-        WiseCore --> Banks[Partner Banks & Neobanks: DBS, Standard Chartered, Mox Bank, Aspire]
+    subgraph B2B ["B2B Distribution: Wise Platform"]
+        WiseCore --> Banks["Partner Banks & Neobanks: DBS, Standard Chartered, Mox Bank, Aspire"]
     end
 ```
 
@@ -83,11 +83,11 @@ flowchart TD
 ### Where Analytics Drives Value in the APAC Squad
 ```mermaid
 graph LR
-    A[Director, Product Analytics] --> B[Corridor Economics & Unit Margins]
-    A --> C[Speed & Liquidity Forecasting]
-    A --> D[Conversion & KYC Funnel Optimization]
-    A --> E[Pricing Elasticity & Mission Metric Modeling]
-    A --> F[Team Development & Analytics Rigor]
+    A["Director, Product Analytics"] --> B["Corridor Economics & Unit Margins"]
+    A --> C["Speed & Liquidity Forecasting"]
+    A --> D["Conversion & KYC Funnel Optimization"]
+    A --> E["Pricing Elasticity & Mission Metric Modeling"]
+    A --> F["Team Development & Analytics Rigor"]
 ```
 
 1. **Corridor Economics & Margin Modeling**:
@@ -126,10 +126,10 @@ Based on Wise's executive hiring process, expect 5 core stages:
 
 ```mermaid
 flowchart LR
-    R1[1. Recruiter Screen: 30m] --> R2[2. Case Study / Technical Screen: 60m]
-    R2 --> R3[3. Product Strategy & Business Sense: 60m]
-    R3 --> R4[4. Leadership, Coaching & Org Scaling: 60m]
-    R4 --> R5[5. Executive & Mission Alignment: 60m]
+    R1["1. Recruiter Screen: 30m"] --> R2["2. Case Study / Technical Screen: 60m"]
+    R2 --> R3["3. Product Strategy & Business Sense: 60m"]
+    R3 --> R4["4. Leadership, Coaching & Org Scaling: 60m"]
+    R4 --> R5["5. Executive & Mission Alignment: 60m"]
 ```
 
 ### Stage 1: Recruiter Screen (30 mins)

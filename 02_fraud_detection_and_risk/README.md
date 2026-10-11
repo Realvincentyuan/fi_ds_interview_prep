@@ -23,19 +23,19 @@ In payment authorization, the entire round-trip decision must execute within **5
 
 ```mermaid
 flowchart TD
-    Txn[Inbound Payment Request] --> Gateway[API Gateway / Ingestion]
-    Gateway --> PreAuth[Deterministic Rules Engine: < 10ms<br/>Hard Blacklists, Sanctions, Geo-blocks]
-    PreAuth -->|Pass| FeatureFetch[Low-Latency Feature Store: < 15ms<br/>Redis / Dragonfly Cache]
-    FeatureFetch --> MLEngine[ML Inference Service: < 25ms<br/>ONNX / Triton / LightGBM]
-    MLEngine --> DecisionTier[Decision Router & Policy Engine]
-    DecisionTier -->|Risk Score < Thresh1| Approve[Auto-Approve]
-    DecisionTier -->|Thresh1 <= Risk Score < Thresh2| Challenge[Step-Up Auth: 3DS / OTP]
-    DecisionTier -->|Risk Score >= Thresh2| Decline[Auto-Decline / Review Queue]
+    Txn["Inbound Payment Request"] --> Gateway["API Gateway / Ingestion"]
+    Gateway --> PreAuth["Deterministic Rules Engine (under 10ms)<br/>Hard Blacklists, Sanctions, Geo-blocks"]
+    PreAuth -->|"Pass"| FeatureFetch["Low-Latency Feature Store (under 15ms)<br/>Redis / Dragonfly Cache"]
+    FeatureFetch --> MLEngine["ML Inference Service (under 25ms)<br/>ONNX / Triton / LightGBM"]
+    MLEngine --> DecisionTier["Decision Router & Policy Engine"]
+    DecisionTier -->|"Risk Score under Thresh1"| Approve["Auto-Approve"]
+    DecisionTier -->|"Thresh1 to Thresh2"| Challenge["Step-Up Auth: 3DS / OTP"]
+    DecisionTier -->|"Risk Score over Thresh2"| Decline["Auto-Decline / Review Queue"]
     
-    Txn -.-> Kafka[Kafka Event Log]
-    Kafka -.-> Flink[Apache Flink: Streaming Window Aggregations]
+    Txn -.-> Kafka["Kafka Event Log"]
+    Kafka -.-> Flink["Apache Flink: Streaming Window Aggregations"]
     Flink -.-> FeatureFetch
-    Kafka -.-> Lakehouse[Feature Store / Warehouse: Iceberg/BigQuery]
+    Kafka -.-> Lakehouse["Feature Store / Warehouse: Iceberg / BigQuery"]
 ```
 
 ### Latency Budget Allocation (Total Target: ~80ms)
@@ -102,12 +102,12 @@ Fraud syndicates attempt to disguise identities by varying names, emails, and ca
 
 ```mermaid
 graph TD
-    User1[User Account A] --- Device[Device Fingerprint: Hash X]
-    User2[User Account B] --- Device
-    User2 --- IP[Residential Proxy IP]
-    User3[User Account C] --- IP
-    User1 --- Card[Card BIN: 411111****]
-    User4[User Account D] --- Card
+    User1["User Account A"] --- Device["Device Fingerprint: Hash X"]
+    User2["User Account B"] --- Device
+    User2 --- IP["Residential Proxy IP"]
+    User3["User Account C"] --- IP
+    User1 --- Card["Card BIN: 411111****"]
+    User4["User Account D"] --- Card
 ```
 
 ### Key Graph Algorithms:

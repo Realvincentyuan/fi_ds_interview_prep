@@ -24,17 +24,17 @@ Not all declines are permanent. Smart routing systems segment decline response c
 
 ```mermaid
 flowchart TD
-    Inbound[Inbound Payment Request] --> Features[Extract Context: BIN, Geo, Card Brand, Amount, Currency]
-    Features --> Tokenizer[Network Tokenization Service: Visa / Mastercard Tokens]
-    Tokenizer --> PolicyEngine[Routing Policy Engine: Multi-Armed Contextual Bandit]
-    PolicyEngine -->|Optimal Route Selected| AcquirerA[Acquirer Rail A: Local Domestic Acquirer]
-    PolicyEngine -.->|Secondary Fallback| AcquirerB[Acquirer Rail B: Global Processor]
+    Inbound["Inbound Payment Request"] --> Features["Extract Context: BIN, Geo, Card Brand, Amount, Currency"]
+    Features --> Tokenizer["Network Tokenization Service: Visa / Mastercard Tokens"]
+    Tokenizer --> PolicyEngine["Routing Policy Engine: Multi-Armed Contextual Bandit"]
+    PolicyEngine -->|"Optimal Route Selected"| AcquirerA["Acquirer Rail A: Local Domestic Acquirer"]
+    PolicyEngine -.->|"Secondary Fallback"| AcquirerB["Acquirer Rail B: Global Processor"]
     
-    AcquirerA -->|Approved: 00| Complete[Capture & Settle]
-    AcquirerA -->|Soft Decline: e.g., 91 Timeout| CircuitBreaker[Circuit Breaker & Fallback]
+    AcquirerA -->|"Approved (00)"| Complete["Capture & Settle"]
+    AcquirerA -->|"Soft Decline (e.g., 91 Timeout)"| CircuitBreaker["Circuit Breaker & Fallback"]
     CircuitBreaker --> AcquirerB
     
-    Complete -.-> Feedback[Reward Feedback: +1 Approval, Cost Penalty]
+    Complete -.-> Feedback["Reward Feedback: +1 Approval, Cost Penalty"]
     Feedback -.-> PolicyEngine
 ```
 

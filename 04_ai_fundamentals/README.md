@@ -12,14 +12,14 @@ $$\operatorname{Attention}(Q, K, V) = \operatorname{softmax}\left(\frac{Q K^T}{\
 
 ```mermaid
 flowchart TD
-    Input[Input Tokens: e.g., 'Transfer $500 to savings'] --> Embed[Token + Positional Embeddings]
-    Embed --> QKV[Linear Projections: Q, K, V]
-    QKV --> ScaledDot[Scaled Dot-Product: Q * K^T / sqrt(d_k)]
-    ScaledDot --> Mask[Causal Masking: Optional for Decoders]
-    Mask --> Softmax[Softmax Attention Weights]
-    Softmax --> MatMul[Multiply by V]
-    MatMul --> Dense[Linear Projection + Residual + LayerNorm]
-    Dense --> FFN[Feed-Forward Network: SwiGLU / GeLU]
+    Input["Input Tokens: e.g., Transfer $500 to savings"] --> Embed["Token + Positional Embeddings"]
+    Embed --> QKV["Linear Projections: Q, K, V"]
+    QKV --> ScaledDot["Scaled Dot-Product: Q * K^T / sqrt(d_k)"]
+    ScaledDot --> Mask["Causal Masking (Optional for Decoders)"]
+    Mask --> Softmax["Softmax Attention Weights"]
+    Softmax --> MatMul["Multiply by V"]
+    MatMul --> Dense["Linear Projection + Residual + LayerNorm"]
+    Dense --> FFN["Feed-Forward Network: SwiGLU / GeLU"]
 ```
 
 ### Key Variations:
@@ -35,20 +35,20 @@ In financial services and payment networks, hallucination cannot be tolerated. R
 
 ```mermaid
 flowchart LR
-    subgraph Offline Ingestion
-        Doc[Policies / Regulatory / API Docs] --> Chunk[Semantic Chunking: 512 tokens]
-        Chunk --> EmbedModel[Embedding Model: text-embedding-3 / BGE]
-        EmbedModel --> VectorDB[(Vector DB: Pinecone / Milvus / pgvector)]
+    subgraph Ingestion ["Offline Ingestion"]
+        Doc["Policies / Regulatory / API Docs"] --> Chunk["Semantic Chunking (512 tokens)"]
+        Chunk --> EmbedModel["Embedding Model: text-embedding-3 / BGE"]
+        EmbedModel --> VectorDB[("Vector DB: Pinecone / Milvus / pgvector")]
     end
     
-    subgraph Online Query Serving
-        UserQuery[User / Support Query] --> QueryEmbed[Embed Query]
-        QueryEmbed --> HybridSearch[Hybrid Search: Dense Vector + BM25 Lexical]
+    subgraph Serving ["Online Query Serving"]
+        UserQuery["User / Support Query"] --> QueryEmbed["Embed Query"]
+        QueryEmbed --> HybridSearch["Hybrid Search: Dense Vector + BM25 Lexical"]
         VectorDB --> HybridSearch
-        HybridSearch --> Reranker[Cross-Encoder Reranker: Top-K]
-        Reranker --> PromptBuild[Prompt Injection + Guardrails]
-        PromptBuild --> LLM[LLM Generation: Gemini / Claude]
-        LLM --> Response[Verified Answer with Citations]
+        HybridSearch --> Reranker["Cross-Encoder Reranker: Top-K"]
+        Reranker --> PromptBuild["Prompt Injection + Guardrails"]
+        PromptBuild --> LLM["LLM Generation: Gemini / Claude"]
+        LLM --> Response["Verified Answer with Citations"]
     end
 ```
 

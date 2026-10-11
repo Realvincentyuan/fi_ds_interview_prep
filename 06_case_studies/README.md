@@ -10,11 +10,11 @@ When given an ambiguous prompt like *"How would you reduce fraud losses on peer-
 
 ```mermaid
 flowchart TD
-    Step1[1. Scope & Business Objective: 5 min<br/>Clarify constraints, North Star KPI, Trade-offs] --> Step2[2. System & Data Architecture: 10 min<br/>Event pipelines, latency budget, data storage]
-    Step2 --> Step3[3. Feature Engineering & Signal Design: 10 min<br/>Streaming vs batch, entity graphs, velocity counters]
-    Step3 --> Step4[4. Modeling & Decision Tier: 10 min<br/>Algorithm choice, loss formulation, calibration, multi-tier routing]
-    Step4 --> Step5[5. Evaluation & Experimentation: 5 min<br/>PR-AUC, cost curves, A/B rollout, guardrail metrics]
-    Step5 --> Step6[6. Failure Modes & Edge Cases: 5 min<br/>Cold start, adversary adaptation, feedback delay, fallback rules]
+    Step1["1. Scope & Business Objective (5 min)<br/>Clarify constraints, North Star KPI, Trade-offs"] --> Step2["2. System & Data Architecture (10 min)<br/>Event pipelines, latency budget, data storage"]
+    Step2 --> Step3["3. Feature Engineering & Signal Design (10 min)<br/>Streaming vs batch, entity graphs, velocity counters"]
+    Step3 --> Step4["4. Modeling & Decision Tier (10 min)<br/>Algorithm choice, loss formulation, calibration, multi-tier routing"]
+    Step4 --> Step5["5. Evaluation & Experimentation (5 min)<br/>PR-AUC, cost curves, A/B rollout, guardrail metrics"]
+    Step5 --> Step6["6. Failure Modes & Edge Cases (5 min)<br/>Cold start, adversary adaptation, feedback delay, fallback rules"]
 ```
 
 ---

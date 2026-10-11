@@ -19,12 +19,11 @@ While Tencent is globally renowned for WeChat, gaming, and cloud services, its *
 
 ```mermaid
 flowchart TD
-    subgraph Tenpay Global Core Business Lines
-        B1[1. Cross-Border Acquiring: Inbound<br/>Enabling global merchants to accept Weixin Pay / UnionPay from Chinese consumers]
-        B2[2. Overseas Merchant Acquiring: Outbound<br/>Acquiring international Visa, Mastercard, JCB, Amex payments for overseas merchants]
-        B3[3. Cross-Border Remittance: WeRemit<br/>P2P cross-border transfers and business disbursements across APAC/Europe]
-        B4[4. Global Digital Commerce<br/>Payment processing for gaming, digital entertainment, and SaaS]
-    end
+    Hub["Tenpay Global Core Business Lines"]
+    Hub --> B1["1. Cross-Border Acquiring (Inbound)<br/>Accept Weixin Pay & UnionPay from Chinese consumers"]
+    Hub --> B2["2. Overseas Merchant Acquiring (Outbound)<br/>Process Visa, Mastercard, JCB & Amex for global merchants"]
+    Hub --> B3["3. Cross-Border Remittance (WeRemit)<br/>P2P transfers and business disbursements across APAC & Europe"]
+    Hub --> B4["4. Global Digital Commerce<br/>Payment processing for gaming, digital entertainment & SaaS"]
 ```
 
 ### The Strategic Mission of the Role
@@ -40,11 +39,11 @@ In payment acquiring, risk control spans the entire lifecycle of a merchant:
 
 ```mermaid
 flowchart LR
-    KYB[1. Merchant Onboarding & KYB] --> Underwriting[2. Risk Scoring & Underwriting]
-    Underwriting --> Reserves[3. Reserve & Payout Terms]
-    Reserves --> Monitoring[4. Real-Time Txn Monitoring]
-    Monitoring --> Dispute[5. Chargeback & Scheme Mgmt]
-    Dispute --> Audit[6. Periodic Review & Offboarding]
+    KYB["1. Merchant Onboarding & KYB"] --> Underwriting["2. Risk Scoring & Underwriting"]
+    Underwriting --> Reserves["3. Reserve & Payout Terms"]
+    Reserves --> Monitoring["4. Real-Time Txn Monitoring"]
+    Monitoring --> Dispute["5. Chargeback & Scheme Mgmt"]
+    Dispute --> Audit["6. Periodic Review & Offboarding"]
 ```
 
 ### Phase 1: Merchant Onboarding & KYB (Know Your Business)

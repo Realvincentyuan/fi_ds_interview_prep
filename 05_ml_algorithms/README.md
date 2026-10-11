@@ -92,9 +92,9 @@ Tree models and downsampled training sets output uncalibrated scores that do not
 
 ```mermaid
 flowchart LR
-    RawScore[Raw GBDT Output] --> Calibrator[Calibration Model]
-    Calibrator --> TrueProb[Accurate True Probability: P_fraud]
-    TrueProb --> Threshold[Cost-Optimal Dollar Decision]
+    RawScore["Raw GBDT Output"] --> Calibrator["Calibration Model"]
+    Calibrator --> TrueProb["Accurate True Probability: P_fraud"]
+    TrueProb --> Threshold["Cost-Optimal Dollar Decision"]
 ```
 
 - **Platt Scaling**: Fits a logistic regression on the model outputs $y \sim \sigma(A \cdot f(x) + B)$. Best when calibration errors are sigmoid-shaped and training data is small.

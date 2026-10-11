@@ -8,14 +8,14 @@ Comprehensive guide to understanding the global payment ecosystem, transaction l
 
 ```mermaid
 flowchart LR
-    Cardholder[Cardholder / Customer] -->|1. Tap/Swipe/Online| Merchant[Merchant]
-    Merchant -->|2. Transaction Data| Gateway[Payment Gateway / Acquirer]
-    Gateway -->|3. Route Auth| Network[Payment Network: Visa / Mastercard / Amex]
-    Network -->|4. Auth Request| Issuer[Issuing Bank: e.g., Capital One, Chase]
-    Issuer -->|5. Auth Response| Network
-    Network -->|6. Auth Response| Gateway
-    Gateway -->|7. Approve/Decline| Merchant
-    Merchant -->|8. Goods/Service| Cardholder
+    Cardholder["Cardholder / Customer"] -->|"1. Tap / Swipe / Online"| Merchant["Merchant"]
+    Merchant -->|"2. Transaction Data"| Gateway["Payment Gateway / Acquirer"]
+    Gateway -->|"3. Route Auth"| Network["Payment Network: Visa / Mastercard / Amex"]
+    Network -->|"4. Auth Request"| Issuer["Issuing Bank: e.g., Capital One, Chase"]
+    Issuer -->|"5. Auth Response"| Network
+    Network -->|"6. Auth Response"| Gateway
+    Gateway -->|"7. Approve / Decline"| Merchant
+    Merchant -->|"8. Goods / Service"| Cardholder
 ```
 
 | Entity | Role & Responsibilities | Key Examples |

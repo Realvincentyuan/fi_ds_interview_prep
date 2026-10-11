@@ -28,11 +28,11 @@ Tencent FiT operates:
 
 ```mermaid
 graph TD
-    A[Tenpay Global Risk Governance] --> B[Merchant Underwriting & KYB]
-    A --> C[Card Scheme Compliance: Visa/Mastercard]
-    A --> D[Transaction Monitoring & Anti-Money Laundering]
-    A --> E[Fraud Risk & Dispute Mitigation]
-    A --> F[MAS Regulatory Governance: PSN01/PSN02]
+    A["Tenpay Global Risk Governance"] --> B["Merchant Underwriting & KYB"]
+    A --> C["Card Scheme Compliance: Visa / Mastercard"]
+    A --> D["Transaction Monitoring & Anti-Money Laundering"]
+    A --> E["Fraud Risk & Dispute Mitigation"]
+    A --> F["MAS Regulatory Governance: PSN01 / PSN02"]
 ```
 
 - **Merchant Lifecycle Risk**: KYB verification, Ultimate Beneficial Owner (UBO) screening, business model risk, rolling reserves, and delayed settlement terms.

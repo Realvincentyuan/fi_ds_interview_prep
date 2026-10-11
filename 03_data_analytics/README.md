@@ -8,16 +8,16 @@ Comprehensive guide covering essential payment KPIs, product analytics framework
 
 ```mermaid
 graph TD
-    GPV[Gross Payment Volume: GPV] --> Rev[Net Revenue = GPV * Take Rate]
-    Rev --> Profit[Gross Profit = Net Revenue - Cost of Funds - Losses]
+    GPV["Gross Payment Volume (GPV)"] --> Rev["Net Revenue = GPV * Take Rate"]
+    Rev --> Profit["Gross Profit = Net Revenue - Cost of Funds - Losses"]
     
-    GPV --> Volume[Transaction Count * Avg Order Value]
-    Volume --> AuthRate[Authorization Rate = Approved / Attempted]
-    AuthRate --> SoftDecline[Soft Declines: Retryable]
-    AuthRate --> HardDecline[Hard Declines: Stolen/Lost/Invalid]
+    GPV --> Volume["Volume = Txn Count * Avg Order Value"]
+    Volume --> AuthRate["Authorization Rate = Approved / Attempted"]
+    AuthRate --> SoftDecline["Soft Declines: Retryable"]
+    AuthRate --> HardDecline["Hard Declines: Stolen / Lost / Invalid"]
     
-    Losses[Losses & Disputes] --> FraudLoss[Fraud Loss Rate: bps of GPV]
-    Losses --> DisputeRate[Chargeback Ratio: Txns Disputed / Total Txns]
+    Losses["Losses & Disputes"] --> FraudLoss["Fraud Loss Rate (bps of GPV)"]
+    Losses --> DisputeRate["Chargeback Ratio = Disputed / Total Txns"]
 ```
 
 | Metric | Formula / Definition | Target / Benchmark | Business Meaning |
