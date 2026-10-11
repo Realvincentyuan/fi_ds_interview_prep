@@ -13,9 +13,10 @@ nav = [
   { "Analytics & ML" = [
       { "03. Data Analytics & Experimentation" = "03_data_analytics/README.md" },
       { "05. Machine Learning & Credit Scorecards" = [
-          { "ML & Risk Algorithms Overview" = "05_ml_algorithms/README.md" },
-          { "Financial Models Deep Dive" = "05_ml_algorithms/finance_models_deep_dive.md" },
-          { "Data Science Interview Q&A" = "05_ml_algorithms/data_science_interview_qa.md" },
+          { "Overview & Reading Guide" = "05_ml_algorithms/README.md" },
+          { "01. Financial Models Deep Dive" = "05_ml_algorithms/01_financial_models_deep_dive.md" },
+          { "02. Fraud Detection ML Implementation" = "05_ml_algorithms/02_fraud_detection_ml_implementation.md" },
+          { "03. Data Science Interview Q&A" = "05_ml_algorithms/03_data_science_interview_qa.md" },
       ]},
   ]},
   { "AI & LLM Agents" = [

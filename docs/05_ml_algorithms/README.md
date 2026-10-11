@@ -4,29 +4,38 @@ Executive guide to machine learning algorithms, credit risk scorecards, real-tim
 
 ---
 
-## 📚 Section Overview & Sub-Modules
+## 📖 Recommended Reading Order & Modules
 
-This module covers the core quantitative methods, model architectures, and production deployment patterns used by tier-1 banks, card networks, and fintech payment providers (**Capital One, JPMorgan Chase, American Express, Stripe, Visa, Wise**):
+This directory is organized into a sequential learning curriculum tailored for Quantitative Risk, Data Science, and Machine Learning Engineering interviews at tier-1 financial institutions (**Capital One, JPMorgan Chase, American Express, Stripe, Visa, Wise, Apple Pay**):
 
 <div class="grid cards" markdown>
 
--   :material-chart-bell-curve-cumulative: **[Financial Models Deep Dive](finance_models_deep_dive.md)**
+-   :material-numeric-1-box: **[01. Financial Models Deep Dive](01_financial_models_deep_dive.md)**
 
     ---
 
-    End-to-end mathematical formulations and operational trade-offs for:
-    - **Traditional Credit Scorecards** (WOE, IV, Logistic Regression, PDO Scaling)
-    - **Explainable Boosting Machines** (EBM / GA2M with interaction terms)
-    - **Ultra-Low-Latency GBDT Fraud Engines** (<5ms inference with custom loss)
-    - **Graph Neural Networks (GNN)** for fraud rings & AML layering
-    - **Survival Analysis & Markov Delinquency Roll Rates** (CECL lifetime loss)
-    - **Regulatory Frameworks** (SR 11-7, Basel III/IV, Fair Lending 80% Rule)
+    **Core Banking, Credit & Regulatory Models**:
+    - Traditional Credit Scorecards (WOE, IV, Logistic Regression, PDO Scaling)
+    - Modern Interpretable ML (Explainable Boosting Machines - EBM / GA2M)
+    - Survival Analysis & Markov Chain Delinquency Roll Rates
+    - Regulatory Governance (Federal Reserve SR 11-7, CECL Reserves, Fair Lending 80% Rule)
 
--   :material-frequently-asked-questions: **[Data Science Interview Q&A](data_science_interview_qa.md)**
+-   :material-numeric-2-box: **[02. Fraud Detection ML Implementation](02_fraud_detection_ml_implementation.md)**
 
     ---
 
-    **15 High-Yield Quantitative & Risk Interview Questions** with executive scripts:
+    **Production Engineering & Optimization for Fraud**:
+    - Feature engineering (velocity, haversine speed, graph degree) & 4-stage feature selection
+    - Hyperparameter tuning deep dive for extreme class imbalance (XGBoost, LightGBM, CatBoost)
+    - Asymmetric cost-sensitive loss & dollar-optimal threshold derivation
+    - Sub-5ms C++ low-latency inference serving via Treelite & ONNX compilation
+    - Handling 30–90 day label lag, PU learning, and production circuit breakers
+
+-   :material-numeric-3-box: **[03. Data Science Interview Q&A](03_data_science_interview_qa.md)**
+
+    ---
+
+    **15 High-Yield Quantitative & Risk Interview Questions**:
     - Why banks still use Scorecards over XGBoost (Adverse Action, FCRA)
     - Extreme class imbalance (0.01% fraud) & why SMOTE fails in payments
     - Population Stability Index (PSI) and Characteristic Stability Index (CSI)
@@ -150,6 +159,7 @@ flowchart LR
 
 ---
 
-## 🔗 Next Steps
-- Dive deep into mathematical derivations and regulatory compliance in the **[Financial Models Deep Dive](finance_models_deep_dive.md)**.
-- Review top interview questions and executive talking scripts in the **[Data Science Interview Q&A](data_science_interview_qa.md)**.
+## 🔗 Next Steps & Reading Path
+1. Read **[01. Financial Models Deep Dive](01_financial_models_deep_dive.md)** for credit scorecards, EBMs, survival analysis, and regulatory validation.
+2. Read **[02. Fraud Detection ML Implementation](02_fraud_detection_ml_implementation.md)** for feature selection, hyperparameter tuning, and sub-5ms low-latency serving.
+3. Review **[03. Data Science Interview Q&A](03_data_science_interview_qa.md)** to prepare executive interview answers for top financial firms.
