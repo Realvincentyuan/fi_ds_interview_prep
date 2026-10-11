@@ -1,0 +1,135 @@
+[project]
+site_name = "Payments, Risk & AI Interview Prep Portal"
+site_description = "Executive interview preparation portal for Payment Networks, Acquirers, Fraud Risk, Analytics, and AI Systems."
+site_author = "Vincent Yuan"
+docs_dir = "docs"
+
+nav = [
+  { "Home" = "index.md" },
+  { "Payment Systems" = [
+      { "01. Payment Systems & Card Networks" = "01_payment_systems_and_networks/README.md" },
+      { "02. Fraud Detection & Risk Management" = "02_fraud_detection_and_risk/README.md" },
+  ]},
+  { "Analytics & ML" = [
+      { "03. Data Analytics & Experimentation" = "03_data_analytics/README.md" },
+      { "05. Machine Learning & Credit Scorecards" = "05_ml_algorithms/README.md" },
+  ]},
+  { "AI & LLM Agents" = [
+      { "04. AI Fundamentals, Transformers & Agents" = "04_ai_fundamentals/README.md" },
+  ]},
+  { "Case Studies" = [
+      { "System Design & Case Framework" = "06_case_studies/README.md" },
+      { "Case 1: Real-Time Fraud Engine (<40ms)" = "06_case_studies/case_01_realtime_fraud_detection.md" },
+      { "Case 2: Smart Payment Routing Optimization" = "06_case_studies/case_02_payment_routing_authorization.md" },
+      { "Case 3: Amusement Park P&L & Bidding Strategy" = "06_case_studies/case_03_amusement_park_business_case.md" },
+      { "Case 4: Co-Working Space Unit Economics" = "06_case_studies/case_04_coworking_space_business_case.md" },
+  ]},
+  { "Company Research" = [
+      { "Capital One / PULSE" = [
+          { "PULSE Network Overview" = "company_research/pulse_capital_one/README.md" },
+          { "Sr. Business Manager, Fraud Strategy" = "company_research/pulse_capital_one/senior_business_manager_fraud_operations_strategy.md" },
+      ]},
+      { "Tencent / Tenpay Global" = [
+          { "Tenpay Global Overview" = "company_research/tencent/README.md" },
+          { "Financial Crime Risk Control Manager" = "company_research/tencent/financial_crime_risk_control_manager_payments.md" },
+      ]},
+      { "Wise (TransferWise)" = [
+          { "Wise Architecture & Model" = "company_research/wise/README.md" },
+          { "Director, Product Analytics (APAC)" = "company_research/wise/director_product_analytics_apac.md" },
+      ]},
+      { "Apple" = [
+          { "Apple Financial Ecosystem Overview" = "company_research/apple/README.md" },
+          { "Trust & Safety PM — Financial Fraud" = "company_research/apple/trust_safety_program_manager_financial_fraud.md" },
+      ]},
+  ]},
+  { "Career & Application Hub" = [
+      { "Hub Overview & Pipeline Stages" = "07_job_application_log/README.md" },
+      { "Candidate Profile & Detailed Experience" = "07_job_application_log/candidate_profile_and_experience.md" },
+      { "Skills Gap Analysis & Role Enrichment" = "07_job_application_log/skills_gap_and_enrichment_strategy.md" },
+      { "Executive Behavioral Prep (STAR Stories)" = "07_job_application_log/behavioral_prep_star.md" },
+      { "Active Application Tracker" = "07_job_application_log/application_tracker.md" },
+  ]},
+]
+
+[project.theme]
+variant = "modern"
+language = "en"
+features = [
+  "announce.dismiss",
+  "content.code.copy",
+  "content.code.select",
+  "content.footnote.tooltips",
+  "content.tabs.link",
+  "content.tooltips",
+  "navigation.expand",
+  "navigation.footer",
+  "navigation.instant",
+  "navigation.instant.prefetch",
+  "navigation.path",
+  "navigation.sections",
+  "navigation.tabs",
+  "navigation.tabs.sticky",
+  "navigation.top",
+  "navigation.tracking",
+  "search.highlight",
+  "toc.follow",
+  "toc.integrate",
+]
+
+[project.theme.font]
+text = "Plus Jakarta Sans"
+code = "JetBrains Mono"
+
+[[project.theme.palette]]
+media = "(prefers-color-scheme)"
+toggle.icon = "lucide/sun-moon"
+toggle.name = "Switch to light mode"
+
+[[project.theme.palette]]
+media = "(prefers-color-scheme: light)"
+scheme = "default"
+primary = "indigo"
+accent = "cyan"
+toggle.icon = "lucide/sun"
+toggle.name = "Switch to dark mode"
+
+[[project.theme.palette]]
+media = "(prefers-color-scheme: dark)"
+scheme = "slate"
+primary = "indigo"
+accent = "cyan"
+toggle.icon = "lucide/moon"
+toggle.name = "Switch to system preference"
+
+[project.validation]
+invalid_links = false
+invalid_link_anchors = false
+
+[project.markdown_extensions]
+abbr = {}
+admonition = {}
+attr_list = {}
+def_list = {}
+footnotes = {}
+md_in_html = {}
+toc.permalink = true
+pymdownx.betterem = {}
+pymdownx.caret = {}
+pymdownx.details = {}
+pymdownx.emoji.emoji_generator = "zensical.extensions.emoji.to_svg"
+pymdownx.emoji.emoji_index = "zensical.extensions.emoji.twemoji"
+pymdownx.highlight.anchor_linenums = true
+pymdownx.highlight.line_spans = "__span"
+pymdownx.highlight.pygments_lang_class = true
+pymdownx.inlinehilite = {}
+pymdownx.keys = {}
+pymdownx.magiclink = {}
+pymdownx.mark = {}
+pymdownx.smartsymbols = {}
+pymdownx.superfences.custom_fences = [
+  { name = "mermaid", class = "mermaid", format = "pymdownx.superfences.fence_code_format" },
+]
+pymdownx.tabbed.alternate_style = true
+pymdownx.tabbed.combine_header_slug = true
+pymdownx.tasklist.custom_checkbox = true
+pymdownx.tilde = {}

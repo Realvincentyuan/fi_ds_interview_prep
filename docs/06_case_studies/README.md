@@ -23,8 +23,10 @@ flowchart TD
 
 | Case Study | Domain / Focus | Key Challenges | Target Roles |
 | :--- | :--- | :--- | :--- |
-| **[Case 01: Real-Time Fraud Detection Engine](file:///Users/vincent_yuan/GitHub/career_repos/cof_interview_prep/06_case_studies/case_01_realtime_fraud_detection.md)** | Machine Learning System Design | 10k TPS, < 50ms latency, 0.05% imbalance, delayed labels | ML Engineer, Risk Data Scientist, Platform Architect |
-| **[Case 02: Smart Payment Routing & Auth Optimization](file:///Users/vincent_yuan/GitHub/career_repos/cof_interview_prep/06_case_studies/case_02_payment_routing_authorization.md)** | Payments Product Analytics & RL | Dynamic acquirer routing, soft decline retry logic, interchange cost minimization | Product Analyst, ML Scientist, Payment Operations |
+| **[Case 01: Real-Time Fraud Detection Engine](case_01_realtime_fraud_detection.md)** | Machine Learning System Design | 10k TPS, < 50ms latency, 0.05% imbalance, delayed labels | ML Engineer, Risk Data Scientist, Platform Architect |
+| **[Case 02: Smart Payment Routing & Auth Optimization](case_02_payment_routing_authorization.md)** | Payments Product Analytics & RL | Dynamic acquirer routing, soft decline retry logic, interchange cost minimization | Product Analyst, ML Scientist, Payment Operations |
+| **[Case 03: Amusement Park P&L, Season Pass & Auction Game Theory](case_03_amusement_park_business_case.md)** | Commercial Strategy & Business Case | Baseline P&L turnaround, pass cannibalization vs in-park spend lift, land expansion bidding game theory | Senior Business Manager, Business Analyst, Strategy Director |
+| **[Case 04: Co-Working Space Unit Economics & Frontier](case_04_coworking_space_business_case.md)** | Pricing Strategy & Break-Even Modeling | Hourly to subscription shift, adverse selection diagnostic, 2D break-even frontier whiteboard graphing | Senior Business Manager, Business Analyst, Strategy Director |
 
 ---
 
