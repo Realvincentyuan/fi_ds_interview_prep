@@ -145,6 +145,28 @@ If CatBoost used only a single permutation:
 - Instances near the end would have statistics based on many samples (low variance).
 - **The Solution**: CatBoost generates multiple independent random permutations (typically 4 in training). For each tree constructed in the ensemble, a different random permutation is used to calculate the Ordered TS, ensuring variance symmetry across all training samples.
 
+#### 4. Virtual Time (Permutations) vs. Physical Transaction Time (`has_time=True`)
+
+A critical question in financial data science interviews is:  
+*If no transaction timestamp column is passed to CatBoost, how does it know what is 'past' and what is 'future'?*
+
+##### Mode A: Default Mode (`has_time=False`) — Synthetic "Virtual Time"
+- CatBoost does **not** inspect a datetime column.
+- Instead, it invents a synthetic "virtual time arrow" by generating **random permutations** `σ` of row indices: `[0, 1, 2, ..., N-1]`.
+- For permutation `σ`, sample `i` considers any sample `j` where `σ(j) < σ(i)` as its "past".
+- **Why this works**: The mathematical goal of Ordered TS is **leakage prevention**—ensuring sample `i`'s own ground-truth label `y_i` is never included in its own feature computation. Generating random permutations guarantees zero self-leakage on tabular data without requiring any timestamp metadata.
+
+##### Mode B: Real-Time Fraud Mode (`has_time=True`) — Strict Physical Time
+- In production payment fraud, true historical causality matters: a fraud wave that occurred next month should not inform the target encoding of a transaction that happened today!
+- If your training DataFrame is pre-sorted chronologically by `transaction_timestamp`:
+  ```python
+  df = df.sort_values("transaction_timestamp").reset_index(drop=True)
+  ```
+- And you pass `"has_time": True` to `CatBoostClassifier` (or `Pool(..., has_time=True)`):
+  1. CatBoost **disables random permutations**.
+  2. It enforces that sample `i`'s target statistics are computed **strictly from preceding rows** (`j < i`), perfectly mirroring real-world streaming history.
+  3. This completely prevents future look-ahead bias from future fraud attacks leaking into historical baselines.
+
 ---
 
 ### Dynamic On-The-Fly Feature Combinations in CatBoost
@@ -181,28 +203,34 @@ During real-time production scoring (or testing):
 
 ```python
 from catboost import CatBoostClassifier, Pool
+import pandas as pd
 import numpy as np
 
-# Define high-cardinality categorical fields
+# 1. Pre-sort data chronologically for production fraud modeling
+# df = df.sort_values("transaction_timestamp").reset_index(drop=True)
+
+# 2. Define high-cardinality categorical fields
 categorical_cols = [
     "merchant_id", "mcc_code", "card_acceptor_id",
     "device_fingerprint_hash", "issuer_bin", "billing_postal_code"
 ]
 
-# Create CatBoost Pools
+# 3. Create CatBoost Pools with explicit temporal ordering
 train_pool = Pool(
     data=X_train,
     label=y_train,
-    cat_features=categorical_cols
+    cat_features=categorical_cols,
+    has_time=True   # Enforces strict chronological order, disables random permutations
 )
 
 val_pool = Pool(
     data=X_val,
     label=y_val,
-    cat_features=categorical_cols
+    cat_features=categorical_cols,
+    has_time=True
 )
 
-# CatBoost parameters optimized for extreme imbalance fraud
+# 4. CatBoost parameters optimized for extreme imbalance fraud
 catboost_params = {
     "iterations": 1000,
     "learning_rate": 0.03,
@@ -214,6 +242,7 @@ catboost_params = {
     "cat_features": categorical_cols,
     "one_hot_max_size": 10,       # Categories with ≤10 unique values use One-Hot
     "max_ctr_complexity": 2,      # Maximum combination depth (pairs: cat1 + cat2)
+    "has_time": True,             # Preserves true chronological causality
     
     # Asymmetric cost-weighting for rare fraud (e.g. 0.05% base rate)
     "auto_class_weights": "Balanced",  # or custom class_weights=[1.0, 15.0]
