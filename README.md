@@ -1,7 +1,7 @@
 # Financial Technology & AI Interview Preparation Hub
 
-> **Target Companies & Roles**: Wise, Tencent (Tenpay Global), Capital One (COF), Stripe, Adyen, Visa, Mastercard, American Express, PayPal, Block/Square, and Tier-1 Tech Risk & Analytics Teams.  
-> **Target Positions**: Director of Product Analytics, Financial Crime Risk Control Manager, Machine Learning Engineer (Risk/Fraud), Data Scientist, Quantitative Risk Analyst, Product/Data Analyst, Financial Systems Architect, AI Engineer.
+> **Target Companies & Roles**: Capital One / PULSE, Wise, Tencent (Tenpay Global), Stripe, Adyen, Visa, Mastercard, American Express, PayPal, Block/Square, and Tier-1 Tech Risk & Analytics Teams.  
+> **Target Positions**: Senior Business Manager (Fraud Operations Strategy), Director of Product Analytics, Financial Crime Risk Control Manager, Machine Learning Engineer (Risk/Fraud), Data Scientist, Quantitative Risk Analyst, Product/Data Analyst, Financial Systems Architect, AI Engineer.
 
 ---
 
@@ -20,6 +20,9 @@ cof_interview_prep/
 │   ├── case_01_realtime_fraud_detection.md
 │   └── case_02_payment_routing_authorization.md
 └── company_research/                   # Company-Specific Interview Dossiers & Strategic Intel
+    ├── pulse_capital_one/
+    │   ├── README.md
+    │   └── senior_business_manager_fraud_operations_strategy.md
     ├── wise/
     │   ├── README.md
     │   └── director_product_analytics_apac.md
@@ -78,6 +81,14 @@ cof_interview_prep/
 - **The 6-Step Fintech Case Interview Framework**: Scoping $\rightarrow$ Architecture $\rightarrow$ Signal Design $\rightarrow$ Modeling $\rightarrow$ Evaluation $\rightarrow$ Failure Modes.
 - **[Case Study 01: Real-Time Fraud Detection Engine](file:///Users/vincent_yuan/GitHub/career_repos/cof_interview_prep/06_case_studies/case_01_realtime_fraud_detection.md)**: 15k TPS, < 40ms P99 latency, LightGBM + ONNX, Redis sliding windows.
 - **[Case Study 02: Payment Routing & Auth Optimization](file:///Users/vincent_yuan/GitHub/career_repos/cof_interview_prep/06_case_studies/case_02_payment_routing_authorization.md)**: Contextual Thompson Sampling, network tokenization, and soft decline recovery.
+
+---
+
+### ⚡ [Company Research: PULSE / Capital One (Debit Network)](file:///Users/vincent_yuan/GitHub/career_repos/cof_interview_prep/company_research/pulse_capital_one/README.md)
+- **[Senior Business Manager, Fraud Operations Strategy Dossier](file:///Users/vincent_yuan/GitHub/career_repos/cof_interview_prep/company_research/pulse_capital_one/senior_business_manager_fraud_operations_strategy.md)**:
+  - Strategic analysis of the **$182k–$208k base + incentives** leadership role in Houston, TX / Deerfield, IL leading ~8 fraud risk specialists.
+  - Deep-dive into **debit network uniqueness**: Demand Deposit Account (DDA) cash drain, single-message real-time clearing, Regulation E liability rules, and Durbin Amendment (Reg II) routing.
+  - Fraud threat vectors: ATM cash-out runs, hardware shimming, PINless debit CNP surges, and 150+ ISO 8583 authorization telemetry fields in **PULSE DebitProtect**.
 
 ---
 
