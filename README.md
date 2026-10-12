@@ -10,7 +10,7 @@
 This repository is organized into dedicated modular domains covering technical concepts, mathematical formulations, production architectures, system design cases, and application management:
 
 ```
-cof_interview_prep/
+fi_ds_interview_prep/
 ├── 01_payment_systems_and_networks/    # Payment Rails, 4-Party Model, Clearing & Settlement, ISO 8583
 ├── 02_fraud_detection_and_risk/        # Real-Time Fraud Engines, Feature Streaming, Class Imbalance
 ├── 03_data_analytics/                  # Fintech Metrics, Advanced SQL Patterns, A/B Testing & CUPED
@@ -35,7 +35,7 @@ cof_interview_prep/
 
 ## 📚 Module Overviews & Quick Links
 
-### 💳 [01. Payment Systems & Payment Networks](file:///Users/vincent_yuan/GitHub/career_repos/cof_interview_prep/01_payment_systems_and_networks/README.md)
+### 💳 [01. Payment Systems & Payment Networks](docs/01_payment_systems_and_networks/README.md)
 - **The Four-Party Model**: Cardholders, Merchants, Payment Gateways/Acquirers, Payment Networks (Visa/MC), and Issuing Banks (Capital One, Chase).
 - **Transaction Lifecycles**: Split-second Authorization (< 2s) vs. Batch Clearing vs. Settlement (T+1/T+3).
 - **Financial Economics**: Interchange breakdown, network assessment, merchant discount rate (MDR), and Durbin amendment caps.
@@ -44,7 +44,7 @@ cof_interview_prep/
 
 ---
 
-### 🛡️ [02. Fraud Detection & Risk Management](file:///Users/vincent_yuan/GitHub/career_repos/cof_interview_prep/02_fraud_detection_and_risk/README.md)
+### 🛡️ [02. Fraud Detection & Risk Management](docs/02_fraud_detection_and_risk/README.md)
 - **Fraud Taxonomies**: Card-Not-Present (CNP), Account Takeover (ATO), Synthetic Identity, Bust-Out, and Friendly Fraud.
 - **Real-Time Scoring Architecture**: Sub-50ms latency budget, dual-tier rule and ML engines, and in-memory caches.
 - **Streaming Feature Engineering**: Sliding window velocity counters (`10m`, `1h`, `24h`), impossible travel heuristics, and entity novelty.
@@ -54,14 +54,14 @@ cof_interview_prep/
 
 ---
 
-### 📊 [03. Data Analytics & Product Experimentation](file:///Users/vincent_yuan/GitHub/career_repos/cof_interview_prep/03_data_analytics/README.md)
+### 📊 [03. Data Analytics & Product Experimentation](docs/03_data_analytics/README.md)
 - **Payments KPI Hierarchy**: Gross Payment Volume (GPV), Net Take Rate, Authorization Rate, Chargeback Ratio, and Loss bps.
 - **Advanced SQL Patterns**: Rolling transaction window aggregations, monthly cohort retention analysis, and decline chain detection.
 - **Experimentation in Fintech**: Sample Ratio Mismatch (SRM), variance reduction via **CUPED**, two-sided network spillover, and risk guardrail metrics.
 
 ---
 
-### 🤖 [04. AI Fundamentals & GenAI Architectures](file:///Users/vincent_yuan/GitHub/career_repos/cof_interview_prep/04_ai_fundamentals/README.md)
+### 🤖 [04. AI Fundamentals & GenAI Architectures](docs/04_ai_fundamentals/README.md)
 - **Foundation Models**: Scaled dot-product self-attention, Encoder vs. Decoder architectures, and Mixture of Experts (MoE).
 - **Enterprise Financial RAG**: Dense vector + BM25 hybrid search, cross-encoder rerankers, and RAG Triad evaluation.
 - **AI Agents**: ReAct loops, deterministic schema-validated tool calling, and human-in-the-loop (HITL) safety boundaries.
@@ -69,7 +69,7 @@ cof_interview_prep/
 
 ---
 
-### 🧠 [05. Machine Learning Algorithms for Risk & Payments](file:///Users/vincent_yuan/GitHub/career_repos/cof_interview_prep/05_ml_algorithms/README.md)
+### 🧠 [05. Machine Learning Algorithms for Risk & Payments](docs/05_ml_algorithms/README.md)
 - **Gradient Boosted Decision Trees (GBDT)**: LightGBM leaf-wise tree growth, histogram binning, and handling missing values.
 - **Credit Scorecards**: Weight of Evidence (WOE), Information Value (IV), and log-odds scaling to score points.
 - **Unsupervised Anomaly Detection**: Isolation Forests, autoencoder reconstruction errors, and Mahalanobis distance.
@@ -77,31 +77,31 @@ cof_interview_prep/
 
 ---
 
-### 💼 [06. Case Studies & System Design](file:///Users/vincent_yuan/GitHub/career_repos/cof_interview_prep/06_case_studies/README.md)
+### 💼 [06. Case Studies & System Design](docs/06_case_studies/README.md)
 - **The 6-Step Fintech Case Interview Framework**: Scoping $\rightarrow$ Architecture $\rightarrow$ Signal Design $\rightarrow$ Modeling $\rightarrow$ Evaluation $\rightarrow$ Failure Modes.
-- **[Case Study 01: Real-Time Fraud Detection Engine](file:///Users/vincent_yuan/GitHub/career_repos/cof_interview_prep/06_case_studies/case_01_realtime_fraud_detection.md)**: 15k TPS, < 40ms P99 latency, LightGBM + ONNX, Redis sliding windows.
-- **[Case Study 02: Payment Routing & Auth Optimization](file:///Users/vincent_yuan/GitHub/career_repos/cof_interview_prep/06_case_studies/case_02_payment_routing_authorization.md)**: Contextual Thompson Sampling, network tokenization, and soft decline recovery.
+- **[Case Study 01: Real-Time Fraud Detection Engine](docs/06_case_studies/case_01_realtime_fraud_detection.md)**: 15k TPS, < 40ms P99 latency, LightGBM + ONNX, Redis sliding windows.
+- **[Case Study 02: Payment Routing & Auth Optimization](docs/06_case_studies/case_02_payment_routing_authorization.md)**: Contextual Thompson Sampling, network tokenization, and soft decline recovery.
 
 ---
 
-### ⚡ [Company Research: PULSE / Capital One (Debit Network)](file:///Users/vincent_yuan/GitHub/career_repos/cof_interview_prep/company_research/pulse_capital_one/README.md)
-- **[Senior Business Manager, Fraud Operations Strategy Dossier](file:///Users/vincent_yuan/GitHub/career_repos/cof_interview_prep/company_research/pulse_capital_one/senior_business_manager_fraud_operations_strategy.md)**:
+### ⚡ [Company Research: PULSE / Capital One (Debit Network)](docs/company_research/pulse_capital_one/README.md)
+- **[Senior Business Manager, Fraud Operations Strategy Dossier](docs/company_research/pulse_capital_one/senior_business_manager_fraud_operations_strategy.md)**:
   - Strategic analysis of the **$182k–$208k base + incentives** leadership role in Houston, TX / Deerfield, IL leading ~8 fraud risk specialists.
   - Deep-dive into **debit network uniqueness**: Demand Deposit Account (DDA) cash drain, single-message real-time clearing, Regulation E liability rules, and Durbin Amendment (Reg II) routing.
   - Fraud threat vectors: ATM cash-out runs, hardware shimming, PINless debit CNP surges, and 150+ ISO 8583 authorization telemetry fields in **PULSE DebitProtect**.
 
 ---
 
-### 🌏 [Company Research: Wise (APAC Hub)](file:///Users/vincent_yuan/GitHub/career_repos/cof_interview_prep/company_research/wise/README.md)
-- **[Director, Product Analytics (APAC - Singapore) Dossier](file:///Users/vincent_yuan/GitHub/career_repos/cof_interview_prep/company_research/wise/director_product_analytics_apac.md)**:
+### 🌏 [Company Research: Wise (APAC Hub)](docs/company_research/wise/README.md)
+- **[Director, Product Analytics (APAC - Singapore) Dossier](docs/company_research/wise/director_product_analytics_apac.md)**:
   - Complete job analysis for the **SGD 230k–318k + RSUs** executive role leading ~10 product analysts.
   - Deep-dive into Wise's **Autonomous Squads model**, the **4 Mission Pillars** (Price, Speed, Convenience, Transparency), and direct APAC rails (FAST/PayNow, DuitNow, NPP, PromptPay, UPI).
   - Interview stages breakdown, sample leadership & trade-off questions, and case scenarios.
 
 ---
 
-### 🐉 [Company Research: Tencent / Tenpay Global](file:///Users/vincent_yuan/GitHub/career_repos/cof_interview_prep/company_research/tencent/README.md)
-- **[Financial Crime Risk Control Manager (Payments) Dossier](file:///Users/vincent_yuan/GitHub/career_repos/cof_interview_prep/company_research/tencent/financial_crime_risk_control_manager_payments.md)**:
+### 🐉 [Company Research: Tencent / Tenpay Global](docs/company_research/tencent/README.md)
+- **[Financial Crime Risk Control Manager (Payments) Dossier](docs/company_research/tencent/financial_crime_risk_control_manager_payments.md)**:
   - In-depth guide for Tenpay Global's **Overseas Acquiring & Cross-Border Payments** business in Singapore.
   - Complete merchant lifecycle risk framework (KYB, underwriting, rolling reserves, transaction laundering detection).
   - Card scheme compliance thresholds (**Visa VAMP/VFMP**, **Mastercard ECP/BRAM**) and Singapore **MAS Notices PSN01/PSN02** regulatory controls.

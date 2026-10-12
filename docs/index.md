@@ -10,7 +10,7 @@
 This repository is organized into dedicated modular domains covering technical concepts, mathematical formulations, production architectures, system design cases, and application management:
 
 ```
-cof_interview_prep/
+fi_ds_interview_prep/
 ├── 01_payment_systems_and_networks/    # Payment Rails, 4-Party Model, Clearing & Settlement, ISO 8583
 ├── 02_fraud_detection_and_risk/        # Real-Time Fraud Engines, Feature Streaming, Class Imbalance
 ├── 03_data_analytics/                  # Fintech Metrics, Advanced SQL Patterns, A/B Testing & CUPED
