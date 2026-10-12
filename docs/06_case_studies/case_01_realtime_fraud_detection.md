@@ -5,7 +5,7 @@ Design an end-to-end Machine Learning System to evaluate payment authorization r
 - **Traffic**: Peak 15,000 Transactions Per Second (TPS).
 - **Latency SLA**: Total ML decision must return within **40 milliseconds** (P99).
 - **Baseline Fraud Rate**: ~0.08% of transaction volume.
-- **Objective**: Maximize fraud capture (Recall) while maintaining False Positive Rate (customer insult rate) $< 0.1\%$.
+- **Objective**: Maximize fraud capture (Recall) while maintaining False Positive Rate (customer insult rate) < 0.1%.
 
 ---
 
@@ -65,7 +65,7 @@ flowchart TD
 
 ### Model Architecture
 - **Primary Model**: Optimized **LightGBM** compiled to **ONNX Runtime** with multithreading on C++ microservice (average inference latency ~2.8ms on 4 CPU cores).
-- **Secondary (Async) Deep Learning / GNN Model**: Runs in background (200ms budget) for larger ticket sizes ($> \$1,000$) or manual review queues to evaluate graph connectivity.
+- **Secondary (Async) Deep Learning / GNN Model**: Runs in background (200ms budget) for larger ticket sizes (> $1,000) or manual review queues to evaluate graph connectivity.
 
 ### Handling Severe Class Imbalance (0.08% positive rate)
 1. **Focal Loss Formulation**:
@@ -81,12 +81,12 @@ flowchart TD
 
 ## 5. Decision Threshold & Expected Loss Optimization
 
-Do not use default $0.5$ threshold! Instead, optimize the decision threshold $\theta^*$ to minimize overall expected financial and user friction cost:
+Do not use default 0.5 threshold! Instead, optimize the decision threshold $\theta^*$ to minimize overall expected financial and user friction cost:
 
 $$\theta^* = \arg\min_{\theta} \left[ \sum_{\text{Txn}} C_{\text{FN}} \cdot \mathbb{I}(p > \theta, y=1) + C_{\text{FP}} \cdot \mathbb{I}(p \le \theta, y=0) + C_{\text{3DS}} \cdot \mathbb{I}(\theta_{\text{low}} < p \le \theta_{\text{high}}) \right]$$
 
 - **$C_{\text{FN}}$ (Fraud Slip-through)**: Transaction Amount + Chargeback Fee ($15) + Scheme Monitoring Penalty.
-- **$C_{\text{FP}}$ (False Positive / Customer Insult)**: Lost Interchange Margin ($~2\%$) + Estimated Customer LTV churn risk (~$45).
+- **$C_{\text{FP}}$ (False Positive / Customer Insult)**: Lost Interchange Margin (~2%) + Estimated Customer LTV churn risk (~$45).
 - **$C_{\text{3DS}}$ (Challenge Friction)**: ~8% cart abandonment rate on 3DS challenge.
 
 ---

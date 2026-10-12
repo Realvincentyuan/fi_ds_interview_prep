@@ -25,9 +25,9 @@ graph TD
 | **Gross Payment Volume (GPV)** | Total dollar volume of successfully settled payments. | Scale dependent | Topline transaction scale. |
 | **Take Rate** | $\frac{\text{Net Revenue}}{\text{GPV}}$ | Typically 1.5% - 2.8% (Credit) | Pricing power & margin per dollar processed. |
 | **Authorization Rate** | $\frac{\text{Count of Approved Txns}}{\text{Count of Attempted Txns}}$ | 85% - 95% (CNP), 95%+ (CP) | Direct measure of checkout conversion and payment health. |
-| **Chargeback / Dispute Rate** | $\frac{\text{Number of Chargebacks}}{\text{Number of Captured Txns}}$ | Must stay $< 0.9\%$ (< 90-100 bps) | Card schemes (Visa VAMP / Mastercard ECP) penalize or suspend merchants exceeding this limit. |
-| **Fraud Rate (Basis Points)** | $\frac{\text{Dollar Amount of Fraud}}{\text{Total Volume}} \times 10,000$ | Typically $< 5 - 10 \text{ bps}$ | Operational efficiency of fraud controls. |
-| **Customer LTV : CAC** | $\frac{\text{Average Lifetime Value}}{\text{Customer Acquisition Cost}}$ | $\ge 3.0$ | Health of growth and customer retention. |
+| **Chargeback / Dispute Rate** | $\frac{\text{Number of Chargebacks}}{\text{Number of Captured Txns}}$ | Must stay < 0.9% (< 90-100 bps) | Card schemes (Visa VAMP / Mastercard ECP) penalize or suspend merchants exceeding this limit. |
+| **Fraud Rate (Basis Points)** | $\frac{\text{Dollar Amount of Fraud}}{\text{Total Volume}} \times 10,000$ | Typically < 5–10 bps | Operational efficiency of fraud controls. |
+| **Customer LTV : CAC** | $\frac{\text{Average Lifetime Value}}{\text{Customer Acquisition Cost}}$ | ≥ 3.0 | Health of growth and customer retention. |
 
 ---
 
@@ -140,6 +140,6 @@ Testing payment flows, checkout UX, or fraud thresholds differs fundamentally fr
 ### 2. Decision Framework: Guardrail Metrics
 When evaluating a treatment variant (e.g., "Relax 3DS challenge on low-risk transactions"):
 - **Primary Metric**: Authorization rate (+1.4%).
-- **Guardrail 1 (Must not degrade)**: Fraud dispute rate ($< 0.8\%$ threshold).
-- **Guardrail 2**: P95 latency ($< 120\text{ms}$).
+- **Guardrail 1 (Must not degrade)**: Fraud dispute rate (< 0.8% threshold).
+- **Guardrail 2**: P95 latency (< 120ms).
 - **Guardrail 3**: Merchant refund rate.

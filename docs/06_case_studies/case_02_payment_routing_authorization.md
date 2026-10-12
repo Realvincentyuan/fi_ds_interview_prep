@@ -3,7 +3,7 @@
 ## 1. Problem Statement
 A global e-commerce merchant processes $10 Billion in annual Gross Payment Volume (GPV) across 15 countries. Currently, all transactions are routed through a single primary acquirer with an average Authorization Rate of **87.2%**.
 - **Industry Benchmark**: 91.5% for comparable merchants.
-- **Financial Impact**: Each 1.0% (100 basis points) increase in authorization rate unlocks **$100M** in incremental settled GMV.
+- **Financial Impact**: Each 1.0% (100 basis points) increase in authorization rate unlocks `$100M` in incremental settled GMV.
 - **Objective**: Design a Smart Payment Routing & Decline Retry Engine that maximizes approval rates while minimizing processor fees and latency.
 
 ---
@@ -58,7 +58,7 @@ For each transaction with context vector $x_t \in \mathbb{R}^d$ (encoding card s
 ## 5. Network Tokenization & Account Updater
 
 - **Network Tokens**: Converting PANs into tokens issued directly by Visa (VTS) or Mastercard (MDES).
-  - Issuer recognizes that the token is merchant-bound $\rightarrow$ lowers fraud risk $\rightarrow$ yields **2–3% higher authorization rate**.
+  - Issuer recognizes that the token is merchant-bound → lowers fraud risk → yields **2–3% higher authorization rate**.
   - Expiration dates and replacement card numbers are automatically updated by the network in real-time when physical cards are replaced or reissued.
 
 ---
@@ -74,5 +74,5 @@ pie title GPV Outcome After Smart Routing Deployment
     "Unrecoverable Hard Declines" : 67
 ```
 
-- **Net Auth Rate Uplift**: 87.2% $\rightarrow$ **93.3%** (+610 bps).
+- **Net Auth Rate Uplift**: 87.2% → **93.3%** (+610 bps).
 - **Annual Incremental Revenue**: $610M in incremental processed volume.

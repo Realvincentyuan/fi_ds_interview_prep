@@ -67,7 +67,7 @@ Real-time fraud models rely heavily on **velocity** and **behavioral delta** fea
 - Geodesic distance between current transaction IP and last known login/transaction location.
 - **Speed of Travel**:
   $$\text{Velocity}_{\text{geo}} = \frac{\text{Distance}(Lat_1, Lon_1, Lat_2, Lon_2)}{\Delta t}$$
-  If velocity $> 900 \text{ km/h}$, flag as impossible physical travel.
+  If velocity > 900 km/h, flag as impossible physical travel.
 
 ---
 
@@ -76,7 +76,7 @@ Real-time fraud models rely heavily on **velocity** and **behavioral delta** fea
 ### 1. Extreme Class Imbalance (0.01% - 0.5% fraud rate)
 - **Do NOT rely on accuracy**: A model predicting all 0s has 99.9% accuracy but 0 utility.
 - **Resampling Trade-offs**:
-  - Downsampling negatives: Speeds up training, but alters baseline predicted probabilities $\rightarrow$ requires Platt scaling / probability recalibration:
+  - Downsampling negatives: Speeds up training, but alters baseline predicted probabilities → requires Platt scaling / probability recalibration:
     $$p = \frac{p_s}{p_s + \frac{1 - p_s}{\beta}}$$
     where $\beta$ is downsampling ratio, $p_s$ is sampled probability.
   - SMOTE / ADASYN: Often introduces noise in high-dimensional tabular data.
@@ -90,7 +90,7 @@ Real-time fraud models rely heavily on **velocity** and **behavioral delta** fea
 
 ### 3. Evaluation Metrics That Matter
 - **PR-AUC (Precision-Recall AUC)**: Far superior to ROC-AUC under extreme imbalance.
-- **Recall at Fixed False Positive Rate**: e.g., "What is our Recall when FPR $\le 0.1\%$?"
+- **Recall at Fixed False Positive Rate**: e.g., "What is our Recall when FPR ≤ 0.1%?"
 - **Expected Value Optimization**:
   $$\mathbb{E}[\text{Profit}] = \sum (\text{Revenue}_{\text{legit}} \cdot \text{TN}) - \sum (\text{Fraud Loss} \cdot \text{FN}) - \sum (\text{Review Cost} + \text{Friction Cost}) \cdot \text{FP}$$
 

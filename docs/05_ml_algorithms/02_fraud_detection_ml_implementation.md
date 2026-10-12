@@ -56,7 +56,7 @@ Fraud models require features that capture anomalous deviations in speed, locati
 | :--- | :--- | :--- | :--- |
 | **1. Velocity & Frequency** | `txns_last_5m`, `txns_last_1h`, `unique_cards_per_device_24h` | In-memory Redis sliding windows | Card testing bots, brute force attacks |
 | **2. Monetary Deviation** | `amount_ratio_30d = amount / mean_amount_30d`, `amount_zscore` | Online Feature Store | Account takeover bust-out spending |
-| **3. Geo-Spatial Velocity** | `haversine_km / delta_hours`, `country_mismatch_flag` | Real-time computed | Impossible travel (e.g., London $\to$ Tokyo in 1h) |
+| **3. Geo-Spatial Velocity** | `haversine_km / delta_hours`, `country_mismatch_flag` | Real-time computed | Impossible travel (e.g., London → Tokyo in 1h) |
 | **4. Graph & Entity Topology** | `device_degree_centrality`, `shared_phone_cluster_size` | Graph analytics / Precomputed | Fraud rings, organized syndicate farms |
 | **5. Behavioral Biometrics** | `keystroke_dynamics`, `paste_count`, `form_fill_duration` | Client-side SDK telemetry | Credential stuffing, automated scripts |
 
@@ -642,7 +642,7 @@ The theoretical cost-optimal cutoff is:
 *Example*: If $C_{\text{FP}} = \$3.00$ and $L_{\text{FN}} = \$147.00$:
 > **Threshold_optimal = \$3 / (\$3 + \$147) = 3 / 150 = 0.02 (2.0%)**
 
-Any transaction with a calibrated fraud probability $\ge 2.0\%$ should be intervened upon.
+Any transaction with a calibrated fraud probability ≥ 2.0% should be intervened upon.
 
 ---
 
@@ -748,7 +748,7 @@ Transaction Date (Day 0) ──► First 14 Days: 90% of fraud is UNLABELED (App
    - Never replace a live fraud model instantaneously.
    - Run the new candidate model in **Shadow Mode** for 14 days, scoring live production traffic in parallel without taking automated actions.
    - Compare score distributions, correlation with the production champion model, and early fraud alert velocity.
-   - Ramp up traffic: `5%` $\to$ `20%` $\to$ `50%` $\to$ `100%`.
+   - Ramp up traffic: `5%` → `20%` → `50%` → `100%`.
 
 ---
 

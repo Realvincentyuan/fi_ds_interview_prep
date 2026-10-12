@@ -50,8 +50,8 @@ Target Customer Personas
 - **Hourly Pricing**: $5 / hour
 
 #### Step-by-Step Calculation:
-1. **Total Monthly Fixed Costs (FC)**: $8,000 (Rent) + $8,000 (Maintenance) = **$16,000 / month**
-2. **Break-Even Volume (Q_BE)**: Total Fixed Costs / Hourly Rate = $16,000 / $5.00 = **3,200 hours/month**
+1. **Total Monthly Fixed Costs (FC)**: `$8,000` (Rent) + `$8,000` (Maintenance) = `$16,000/month`
+2. **Break-Even Volume (Q_BE)**: Total Fixed Costs / Hourly Rate = `$16,000` / `$5.00` = **3,200 hours/month**
 
 > **Takeaway**: The space must achieve at least **3,200 billable hours per month** across all desks to cover overhead.
 
@@ -60,9 +60,9 @@ Target Customer Personas
 ### Question 3: If actual usage is 3,000 hours/month, what is the profitability over a 3-month period?
 
 #### Step-by-Step Calculation:
-1. **Monthly Revenue**: 3,000 hours × $5/hour = **$15,000**
-2. **Monthly Operating Profit (Loss)**: $15,000 (Revenue) - $16,000 (Costs) = **-$1,000 / month**
-3. **Cumulative 3-Month Profitability**: -$1,000 × 3 months = **-$3,000** *(A cumulative net loss of $3,000)*
+1. **Monthly Revenue**: 3,000 hours × `$5/hour` = `$15,000`
+2. **Monthly Operating Profit (Loss)**: `$15,000` (Revenue) - `$16,000` (Costs) = `-$1,000/month`
+3. **Cumulative 3-Month Profitability**: `-$1,000` × 3 months = `-$3,000` *(A cumulative net loss of $3,000)*
 
 ---
 
@@ -79,21 +79,21 @@ Target Customer Personas
 
 #### Algebraic Setup:
 - Total Customer Base: **300 customers**
-- Let **X** = Number of customers converting to the **$60/month subscription**.
+- Let **X** = Number of customers converting to the `$60/month subscription`.
 - Remaining Non-Subscribers = **(300 - X)** customers.
-- Non-subscribers continue their baseline average behavior: **10 hours/month at $5/hour** = **$50/month per customer**.
-- Target Revenue to Break Even: **$16,000**.
+- Non-subscribers continue their baseline average behavior: **10 hours/month at $5/hour** = `$50/month per customer`.
+- Target Revenue to Break Even: `$16,000`.
 
 #### Equation Formulation:
 - **Total Revenue** = Subscriber Revenue + Non-Subscriber Revenue = $16,000
-- ($60 × X) + [$5 × 10 × (300 - X)] = $16,000
-- $60X + $50(300 - X) = $16,000
-- $60X + $15,000 - $50X = $16,000
-- $10X = $1,000
+- (`$60` × X) + [`$5` × 10 × (300 - X)] = `$16,000`
+- `$60X` + `$50`(300 - X) = `$16,000`
+- `$60X` + `$15,000` - `$50X` = `$16,000`
+- `$10X` = `$1,000`
 - **X = 100 subscribers**
 
 #### Business Interpretation:
-- Exactly **100 subscribers** (paying $60 = $6,000) and **200 non-subscribers** (paying $50 = $10,000) generate $6,000 + $10,000 = **$16,000**, achieving an exact zero-profit break-even state.
+- Exactly **100 subscribers** (paying `$60` = `$6,000`) and **200 non-subscribers** (paying `$50` = `$10,000`) generate `$6,000` + `$10,000` = `$16,000`, achieving an exact zero-profit break-even state.
 - **Conversion Rate Required**: 100 / 300 = **33.3%** adoption.
 
 ---
@@ -103,20 +103,20 @@ Target Customer Personas
 ### Question 6: In reality, 40% of the 300 customers converted to the subscription. Total booking hours increased by 10%, but total revenue actually declined by $300. Calculate the new average hours for non-subscribers and explain why revenue dropped.
 
 #### Step A: Calculate the New Total Revenue
-- **Baseline Revenue**: 3,000 hours × $5 = $15,000
-- **New Total Revenue**: $15,000 - $300 = **$14,700**
+- **Baseline Revenue**: 3,000 hours × `$5` = `$15,000`
+- **New Total Revenue**: `$15,000` - `$300` = `$14,700`
 
 #### Step B: Segment the 300 Customers
 - **Subscribers (40%)**: 300 × 40% = **120 customers**
-  - Subscriber Revenue = 120 × $60 = **$7,200**
+  - Subscriber Revenue = 120 × `$60` = `$7,200`
 - **Non-Subscribers (60%)**: 300 × 60% = **180 customers**
 
 #### Step C: Calculate the New Average Hours for Non-Subscribers (H)
 - **Total Revenue** = Subscriber Revenue + Non-Subscriber Revenue
-- $14,700 = $7,200 + (180 × $5 × H)
-- $14,700 - $7,200 = 900 × H
-- $7,500 = 900H
-- H = $7,500 / 900 = **8.33 hours/month**
+- `$14,700` = `$7,200` + (180 × `$5` × H)
+- `$14,700` - `$7,200` = 900 × H
+- `$7,500` = 900H
+- H = `$7,500` / 900 = **8.33 hours/month**
 
 ---
 
@@ -128,9 +128,9 @@ Deliver this crisp 3-part diagnostic:
 
 1. **Adverse Selection (Self-Selection Trap)**:
    - Customers who knew they were heavy users (e.g., working 15 to 25 hours/month) immediately opted into the $60 flat subscription.
-   - Under the old model, a 20-hour user generated 20 hours × $5 = $100. Under the subscription, their revenue contribution was capped at **$60**, stripping out **$40 of high-margin billable revenue per heavy user**.
+   - Under the old model, a 20-hour user generated 20 hours × `$5` = `$100`. Under the subscription, their revenue contribution was capped at `$60`, stripping out `$40 of high-margin billable revenue per heavy user`.
 2. **Zero Marginal Cost Consumption**:
-   - The 10% increase in total hours (3,000 → 3,300 hours) was consumed entirely by subscribers who faced **zero marginal cost** for additional hours. This extra usage generated **$0 in incremental revenue** while accelerating wear-and-tear and utility costs.
+   - The 10% increase in total hours (3,000 → 3,300 hours) was consumed entirely by subscribers who faced **zero marginal cost** for additional hours. This extra usage generated `$0 in incremental revenue` while accelerating wear-and-tear and utility costs.
 3. **Diluted Non-Subscriber Cohort**:
    - The remaining 180 non-subscribers are light, infrequent users whose average usage dropped from 10 hours down to **8.33 hours/month** (180 × 8.33 hours × $5 = $7,500).
    - The $10 premium paid by moderate users ($60 vs. $50) was insufficient to offset the revenue lost from heavy users.
@@ -163,7 +163,7 @@ To plot this frontier rapidly during an interview, determine the **two boundary 
 
 #### 1. Point A (Y-Intercept): 0% Non-Subscribers (100% Subscribers)
 - All 300 customers are subscribers paying $60/month.
-- Revenue = 300 × $60 = **$18,000**.
+- Revenue = 300 × $60 = `$18,000`.
 - Since $18,000 exceeds the $16,000 fixed costs, the business is profitable with **zero hours required from non-subscribers**.
 - **Coordinate**: **(X = 0 hours, Y = 0%)**
 
@@ -199,8 +199,8 @@ When asked: *"How should the company redesign its pricing structure to fix this 
 Present these four commercial solutions:
 
 1. **Tiered Hybrid Membership (All-You-Can-Eat Cap)**:
-   - Replace the unlimited $60 plan with a **12-Hour Tiered Pass ($60/month)**.
-   - Any usage beyond 12 hours is billed at a discounted member rate of **$3.50/hour**, eliminating the zero-marginal-cost trap.
+   - Replace the unlimited `$60` plan with a **12-Hour Tiered Pass (`$60/month`)**.
+   - Any usage beyond 12 hours is billed at a discounted member rate of `$3.50/hour`, eliminating the zero-marginal-cost trap.
 2. **Dedicated Desk Premium**:
    - Introduce hot desks ($60/mo, capped) vs. dedicated reserved desks ($150/mo) to monetize high-frequency startup founders.
 3. **Off-Peak Dynamic Hourly Pricing**:

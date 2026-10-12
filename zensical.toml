@@ -3,6 +3,10 @@ site_name = "Payments, Risk & AI Interview Prep Portal"
 site_description = "Executive interview preparation portal for Payment Networks, Acquirers, Fraud Risk, Analytics, and AI Systems."
 site_author = "Vincent Yuan"
 docs_dir = "docs"
+extra_javascript = [
+  "javascripts/mathjax.js",
+  "https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js",
+]
 
 nav = [
   { "Home" = "index.md" },
@@ -95,6 +99,7 @@ def_list = {}
 footnotes = {}
 md_in_html = {}
 toc.permalink = true
+pymdownx.arithmatex = { generic = true, smart_dollar = true }
 pymdownx.betterem = {}
 pymdownx.caret = {}
 pymdownx.details = {}

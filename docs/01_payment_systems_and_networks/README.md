@@ -73,7 +73,7 @@ Where does the $2.50 go?
 ### Key Factors Determining Interchange:
 - **Card Type**: Credit > Debit (Durbin Amendment caps debit interchange for large US banks at $0.21 + 0.05%).
 - **Tier**: Premium rewards cards (Visa Infinite, World Elite Mastercard) charge higher interchange.
-- **Card Present (CP) vs. Card Not Present (CNP)**: CNP has higher risk of fraud $\rightarrow$ higher interchange fees.
+- **Card Present (CP) vs. Card Not Present (CNP)**: CNP has higher risk of fraud → higher interchange fees.
 - **Merchant Category Code (MCC)**: Grocery/charity gets lower rates; airlines/crypto get higher rates.
 
 ---

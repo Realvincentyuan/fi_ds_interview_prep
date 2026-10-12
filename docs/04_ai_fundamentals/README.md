@@ -88,7 +88,7 @@ $$\text{Thought} \rightarrow \text{Action (Tool Call)} \rightarrow \text{Observa
 
 ### Agent Reliability & Safety Controls:
 - **Deterministic Sandboxes**: LLMs propose tool calls via structured JSON schema, but execution happens in a validated backend service.
-- **Human-in-the-Loop (HITL)**: Actions with financial risk exceeding a threshold (e.g., refund $> \$200$) require human approval.
+- **Human-in-the-Loop (HITL)**: Actions with financial risk exceeding a threshold (e.g., refund > $200) require human approval.
 - **State Checkpointing**: Using state graphs (like LangGraph) for deterministic retries and rollback.
 
 ---
@@ -108,5 +108,5 @@ $$\phi_i = \sum_{S \subseteq F \setminus \{i\}} \frac{|S|! (|F| - |S| - 1)!}{|F|
 ### 2. Disparate Impact & Fairness Metrics
 - **Disparate Impact Ratio (DIR)**:
   $$\text{DIR} = \frac{P(\hat{Y} = 1 \mid \text{Protected Group})}{P(\hat{Y} = 1 \mid \text{Reference Group})}$$
-  Must typically satisfy the $80\%$ (4/5ths) rule to ensure non-discrimination.
+  Must typically satisfy the 80% (4/5ths) rule to ensure non-discrimination.
 - **Equal Opportunity**: True Positive Rates should be equal across demographic protected classes.

@@ -68,7 +68,7 @@ fi_ds_interview_prep/
 ---
 
 ### 💼 [06. Case Studies & System Design](06_case_studies/README.md)
-- **The 6-Step Fintech Case Interview Framework**: Scoping $\rightarrow$ Architecture $\rightarrow$ Signal Design $\rightarrow$ Modeling $\rightarrow$ Evaluation $\rightarrow$ Failure Modes.
+- **The 6-Step Fintech Case Interview Framework**: Scoping → Architecture → Signal Design → Modeling → Evaluation → Failure Modes.
 - **[Case Study 01: Real-Time Fraud Detection Engine](06_case_studies/case_01_realtime_fraud_detection.md)**: 15k TPS, < 40ms P99 latency, LightGBM + ONNX, Redis sliding windows.
 - **[Case Study 02: Payment Routing & Auth Optimization](06_case_studies/case_02_payment_routing_authorization.md)**: Contextual Thompson Sampling, network tokenization, and soft decline recovery.
 
