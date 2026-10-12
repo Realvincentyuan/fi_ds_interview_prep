@@ -47,14 +47,8 @@ nav = [
           { "Trust & Safety PM — Financial Fraud" = "company_research/apple/trust_safety_program_manager_financial_fraud.md" },
       ]},
   ]},
-  { "Career & Application Hub" = [
-      { "Hub Overview & Pipeline Stages" = "07_job_application_log/README.md" },
-      { "Candidate Profile & Detailed Experience" = "07_job_application_log/candidate_profile_and_experience.md" },
-      { "Skills Gap Analysis & Role Enrichment" = "07_job_application_log/skills_gap_and_enrichment_strategy.md" },
-      { "Executive Behavioral Prep (STAR Stories)" = "07_job_application_log/behavioral_prep_star.md" },
-      { "Active Application Tracker" = "07_job_application_log/application_tracker.md" },
-  ]},
 ]
+
 
 [project.theme]
 variant = "modern"

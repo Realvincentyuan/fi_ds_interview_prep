@@ -7,7 +7,7 @@
 
 ## 📂 Research Files in this Section
 
-- **[Financial Crime Risk Control Manager (Payments) Dossier](file:///Users/vincent_yuan/GitHub/career_repos/cof_interview_prep/company_research/tencent/financial_crime_risk_control_manager_payments.md)**:
+- **[Financial Crime Risk Control Manager (Payments) Dossier](financial_crime_risk_control_manager_payments.md)**:
   - Deep-dive into Tenpay Global's overseas acquiring business, merchant lifecycle risk framework, card scheme compliance (Visa VAMP / Mastercard ECP), MAS regulatory requirements, AML/CFT transaction monitoring, and technical interview frameworks.
 
 ---

@@ -7,7 +7,7 @@
 
 ## 📂 Research Files in this Section
 
-- **[Senior Business Manager, Fraud Operations Strategy Dossier](file:///Users/vincent_yuan/GitHub/career_repos/cof_interview_prep/company_research/pulse_capital_one/senior_business_manager_fraud_operations_strategy.md)**:
+- **[Senior Business Manager, Fraud Operations Strategy Dossier](senior_business_manager_fraud_operations_strategy.md)**:
   - Deep-dive into the role ($182k–$208k base + incentives), team leadership of ~8 risk/analytics specialists, debit network fraud operations, 150+ ISO 8583 authorization data elements, and interview questions.
 
 ---

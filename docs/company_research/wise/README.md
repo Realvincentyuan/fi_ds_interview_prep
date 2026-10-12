@@ -7,7 +7,7 @@
 
 ## 📂 Research Files in this Section
 
-- **[Director, Product Analytics (APAC - Singapore) Dossier](file:///Users/vincent_yuan/GitHub/career_repos/cof_interview_prep/company_research/wise/director_product_analytics_apac.md)**:
+- **[Director, Product Analytics (APAC - Singapore) Dossier](director_product_analytics_apac.md)**:
   - Deep-dive into the role requirements, APAC regional squad structure, compensation (SGD 230k–318k + RSUs), interview stages, high-impact case scenarios, and strategic answer frameworks.
 
 ---
