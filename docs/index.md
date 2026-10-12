@@ -16,19 +16,9 @@ fi_ds_interview_prep/
 ├── 03_data_analytics/                  # Fintech Metrics, Advanced SQL Patterns, A/B Testing & CUPED
 ├── 04_ai_fundamentals/                 # Transformers, Enterprise RAG, AI Agents, Compliance & Explainability
 ├── 05_ml_algorithms/                   # GBDT, Credit Scorecards (WOE), Anomaly Detection, Calibration
-├── 06_case_studies/                    # End-to-End System Design & Business Analytics Case Studies
-│   ├── case_01_realtime_fraud_detection.md
-│   └── case_02_payment_routing_authorization.md
-└── company_research/                   # Company-Specific Interview Dossiers & Strategic Intel
-    ├── pulse_capital_one/
-    │   ├── README.md
-    │   └── senior_business_manager_fraud_operations_strategy.md
-    ├── wise/
-    │   ├── README.md
-    │   └── director_product_analytics_apac.md
-    └── tencent/
-        ├── README.md
-        └── financial_crime_risk_control_manager_payments.md
+└── 06_case_studies/                    # End-to-End System Design & Business Analytics Case Studies
+    ├── case_01_realtime_fraud_detection.md
+    └── case_02_payment_routing_authorization.md
 ```
 
 ---
@@ -81,31 +71,6 @@ fi_ds_interview_prep/
 - **The 6-Step Fintech Case Interview Framework**: Scoping $\rightarrow$ Architecture $\rightarrow$ Signal Design $\rightarrow$ Modeling $\rightarrow$ Evaluation $\rightarrow$ Failure Modes.
 - **[Case Study 01: Real-Time Fraud Detection Engine](06_case_studies/case_01_realtime_fraud_detection.md)**: 15k TPS, < 40ms P99 latency, LightGBM + ONNX, Redis sliding windows.
 - **[Case Study 02: Payment Routing & Auth Optimization](06_case_studies/case_02_payment_routing_authorization.md)**: Contextual Thompson Sampling, network tokenization, and soft decline recovery.
-
----
-
-### ⚡ [Company Research: PULSE / Capital One (Debit Network)](company_research/pulse_capital_one/README.md)
-- **[Senior Business Manager, Fraud Operations Strategy Dossier](company_research/pulse_capital_one/senior_business_manager_fraud_operations_strategy.md)**:
-  - Strategic analysis of the **$182k–$208k base + incentives** leadership role in Houston, TX / Deerfield, IL leading ~8 fraud risk specialists.
-  - Deep-dive into **debit network uniqueness**: Demand Deposit Account (DDA) cash drain, single-message real-time clearing, Regulation E liability rules, and Durbin Amendment (Reg II) routing.
-  - Fraud threat vectors: ATM cash-out runs, hardware shimming, PINless debit CNP surges, and 150+ ISO 8583 authorization telemetry fields in **PULSE DebitProtect**.
-
----
-
-### 🌏 [Company Research: Wise (APAC Hub)](company_research/wise/README.md)
-- **[Director, Product Analytics (APAC - Singapore) Dossier](company_research/wise/director_product_analytics_apac.md)**:
-  - Complete job analysis for the **SGD 230k–318k + RSUs** executive role leading ~10 product analysts.
-  - Deep-dive into Wise's **Autonomous Squads model**, the **4 Mission Pillars** (Price, Speed, Convenience, Transparency), and direct APAC rails (FAST/PayNow, DuitNow, NPP, PromptPay, UPI).
-  - Interview stages breakdown, sample leadership & trade-off questions, and case scenarios.
-
----
-
-### 🐉 [Company Research: Tencent / Tenpay Global](company_research/tencent/README.md)
-- **[Financial Crime Risk Control Manager (Payments) Dossier](company_research/tencent/financial_crime_risk_control_manager_payments.md)**:
-  - In-depth guide for Tenpay Global's **Overseas Acquiring & Cross-Border Payments** business in Singapore.
-  - Complete merchant lifecycle risk framework (KYB, underwriting, rolling reserves, transaction laundering detection).
-  - Card scheme compliance thresholds (**Visa VAMP/VFMP**, **Mastercard ECP/BRAM**) and Singapore **MAS Notices PSN01/PSN02** regulatory controls.
-  - Strategic answers for merchant underwriting cases, portfolio chargeback surges, and AML/sanctions screening.
 
 ---
 

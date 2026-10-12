@@ -224,3 +224,8 @@ __marimo__/
 docs/07_job_application_log/
 zensical.local.toml
 
+# Company research dossiers (private/local preview only)
+company_research/
+docs/company_research/
+
+
