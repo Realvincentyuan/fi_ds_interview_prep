@@ -300,7 +300,148 @@ Final Production Feature Set (35 - 50 Features)
 
 ---
 
-## 3. Hyperparameter Tuning Deep Dive for Fraud GBDTs
+## 3. Production Dataset Splitting: Out-of-Time (OOT), Purging & Grouping
+
+Dataset splitting in fraud detection is fundamentally different from standard academic machine learning. **Applying standard random K-Fold cross-validation or `train_test_split(shuffle=True)` is the single most common cause of catastrophic model failure in live production.**
+
+```
+                        The 4-Way Production Dataset Split
+Time Axis ────────────────────────────────────────────────────────────────────────────────────────►
+┌────────────────────────────────┬──────────────┬──────────────────┬──────────────┬───────────────┐
+│ In-Time (IT) Training Set      │ Purge Window │ Out-of-Time (OOT)│ Embargo / Gap│ OOT Test Set  │
+│ (e.g., Months 1 to 6)          │ (30 Days)    │ Validation Set   │ (30 Days)    │ (Month 9)     │
+│ • 100% Matured Labels (>90d)   │ • Excluded   │ (Month 7 & 8)    │ • Excluded   │ • Final Model │
+│ • Features strictly historical │ • Prevents   │ • Threshold tune │ • Prevents   │   Sign-Off    │
+│ • Optional negative downsample │   leakage    │ • Real-world rate│   correlation│ • Untouched   │
+└────────────────────────────────┴──────────────┴──────────────────┴──────────────┴───────────────┘
+```
+
+---
+
+### The 3 Critical Failure Modes of Standard Splits in Fraud
+
+#### 1. Temporal Look-Ahead Bias (Time-Travel Leakage)
+- Fraud is adversarial, adaptive, and non-stationary. Fraud syndicates test card numbers, exploit specific merchant vulnerabilities, and pivot to new BIN attack vectors week over week.
+- If you randomly shuffle transactions across time, the training set uses future fraud vectors (from October) to predict past transactions (in March).
+- **The Consequence**: The model achieves an artificially inflated validation PR-AUC of 0.85 during development, but its performance plummets to 0.30 immediately upon live deployment because it never learned to generalize to unseen, future attack strategies.
+
+#### 2. Entity & Account Group Leakage (Serial Correlation)
+- When a cardholder account is compromised or a card is tested, fraudsters execute a high-frequency burst of 5 to 20 transactions within a short window (e.g., automated $1 authorizations across multiple merchants within 10 minutes).
+- In a random split, transactions from the **same compromised cardholder or device fingerprint** land simultaneously in both Train and Test.
+- **The Consequence**: The decision tree splits on `device_hash` or `cardholder_id`, memorizing the identity of that specific compromised victim rather than learning behavioral fraud dynamics.
+
+#### 3. Immature Label Contamination (The 60–90 Day Chargeback Gap)
+- Unlike click-through rate prediction where labels arrive in seconds, fraud ground truth suffers from a **30 to 90 day label maturation lag** (the time it takes for a cardholder to review their monthly statement, file a dispute, and have the issuer log a TC40/SAFE chargeback).
+- If you split a recent dataset (e.g., transactions from the past 45 days) into Train and Test, **unreported fraud is erroneously labeled as legitimate (`Y = 0`)**.
+- **The Consequence**: The model is actively trained and evaluated on corrupted ground truth, penalizing the model for correctly flagging unconfirmed fraud attacks!
+
+---
+
+### The Production Splitting Framework
+
+To ensure that offline validation strictly predicts live production performance, adhere to the **4-Way Partition Architecture**:
+
+| Partition | Time Horizon | Label Maturity | Negative Sampling Policy | Primary Purpose |
+| :--- | :--- | :--- | :--- | :--- |
+| **In-Time (IT) Train** | Months 1 to 6 | **100% Matured** (>90 days old) | Downsample negatives (e.g., 10%) to speed up GBDT training | Feature learning & tree split building |
+| **Purge Window** | 30 Days (Buffer) | Excluded | Excluded | Purges rolling aggregate lookback contamination |
+| **Out-of-Time (OOT) Val**| Month 7 & 8 | **100% Matured** | **NEVER Downsample!** (True empirical 0.05% base rate) | Hyperparameter tuning, early stopping, threshold calibration |
+| **Embargo Window** | 15–30 Days (Buffer)| Excluded | Excluded | Breaks serial entity correlation before test holdout |
+| **OOT Test Holdout** | Month 9 | **100% Matured** | **NEVER Downsample!** (True empirical 0.05% base rate) | Final governance audit, SR 11-7 validation, pre-deploy sign-off |
+
+---
+
+### Purged Walk-Forward Time-Series Cross-Validation
+
+When performing cross-validation for hyperparameter tuning or feature selection, use an **Expanding Walk-Forward Validation** scheme with explicit purging:
+
+```
+Fold 1: [ Train: M1 - M3 ] ──► [ Purge: 30d ] ──► [ Test: M4 ]
+Fold 2: [ Train: M1 - M4 ] ──► [ Purge: 30d ] ──► [ Test: M5 ]
+Fold 3: [ Train: M1 - M5 ] ──► [ Purge: 30d ] ──► [ Test: M6 ]
+Fold 4: [ Train: M1 - M6 ] ──► [ Purge: 30d ] ──► [ Test: M7 ]
+```
+
+#### Why Purging is Mathematically Required:
+If your feature store computes sliding lookback aggregates (e.g., `spend_last_30d` or `distinct_merchants_last_14d`), an observation on Day `t` in the test set uses raw transactions from Days `t - 30` to `t`.
+- If the training set ends on Day `t - 1`, the test features incorporate raw transaction events that overlap with the training label evaluation window!
+- A **Purge Window** equal to the maximum feature lookback duration (e.g., 30 days) must be excised between the train fold end date and the test fold start date.
+
+#### Entity Grouping (`GroupTimeSeriesSplit`):
+To prevent entity identity memorization:
+- Partition by **Cardholder ID / Account ID**.
+- Ensure that all transactions originating from a given cardholder or device within an attack episode reside **strictly within a single fold**.
+
+---
+
+### Sampling Discipline Across Partitions
+
+One of the most dangerous production mistakes is evaluating models on artificially balanced test sets.
+
+#### 1. The Validation & Test Cardinal Rule:
+> **NEVER apply SMOTE, Random Under-Sampling, or positive up-weighting to Validation or Test sets.**
+
+- The Validation and Test sets must strictly preserve the **true empirical production distribution (e.g., 0.05% fraud prevalence)**.
+- If you test on an artificially balanced dataset (e.g., 50% fraud / 50% legit), a model with a 5% false positive rate appears to achieve 90%+ precision. When deployed against the true 0.05% base rate, that exact same model will produce **100 false alarms for every 1 true fraud capture**, completely overwhelming operations review queues.
+
+#### 2. Correcting Probability Distortion from Downsampled Training:
+If you downsampled legitimate transactions in the training set by a factor of `β` (e.g., `β = 0.10` keeping only 10% of negatives) to accelerate tree training:
+
+> **p_calibrated = p_sample / [ p_sample + ( (1 - p_sample) / β ) ]**
+
+- At inference time, pass raw model scores through this closed-form Bayes odds-ratio correction to restore true posterior probabilities before evaluating on the un-sampled Out-of-Time test set.
+
+---
+
+### Production Implementation: Purged Time-Series Splitter
+
+```python
+import pandas as pd
+import numpy as np
+
+class PurgedGroupTimeSeriesSplit:
+    """
+    Purged Walk-Forward Time-Series Cross-Validator with Entity Grouping.
+    Prevents temporal look-ahead, rolling feature contamination, and account leakage.
+    """
+    def __init__(self, n_splits=4, purge_days=30, test_days=30):
+        self.n_splits = n_splits
+        self.purge_days = pd.Timedelta(days=purge_days)
+        self.test_days = pd.Timedelta(days=test_days)
+
+    def split(self, df, time_col="transaction_timestamp", group_col="cardholder_id"):
+        df = df.sort_values(time_col).reset_index(drop=True)
+        max_date = df[time_col].max()
+        
+        # Calculate test windows backward from max_date
+        for i in range(self.n_splits, 0, -1):
+            test_end = max_date - (i - 1) * self.test_days
+            test_start = test_end - self.test_days
+            
+            # Purge buffer separates train end from test start
+            train_end = test_start - self.purge_days
+            
+            train_mask = df[time_col] < train_end
+            test_mask = (df[time_col] >= test_start) & (df[time_col] < test_end)
+            
+            # Optional: Grouping - remove any cardholders from test if present in train tail
+            # to strictly evaluate zero-shot entity generalization
+            train_indices = np.where(train_mask)[0]
+            test_indices = np.where(test_mask)[0]
+            
+            yield train_indices, test_indices
+
+# Usage Example:
+# splitter = PurgedGroupTimeSeriesSplit(n_splits=4, purge_days=30, test_days=30)
+# for fold, (train_idx, val_idx) in enumerate(splitter.split(df)):
+#     X_train, y_train = df.iloc[train_idx], y[train_idx]
+#     X_val, y_val = df.iloc[val_idx], y[val_idx]
+#     print(f"Fold {fold}: Train size {len(train_idx)}, Val size {len(val_idx)}")
+```
+
+---
+
+## 4. Hyperparameter Tuning Deep Dive for Fraud GBDTs
 
 Under extreme class imbalance (fraud rate 0.01% – 0.1%), default hyperparameters in XGBoost, LightGBM, and CatBoost will fail. The model will converge toward predicting the majority class (99.9% legitimate) to minimize standard log-loss.
 
@@ -422,7 +563,7 @@ def objective(trial, X_train, y_train, X_val, y_val):
 
 ---
 
-## 4. Cost-Sensitive Thresholding & Multi-Tier Routing
+## 5. Cost-Sensitive Thresholding & Multi-Tier Routing
 
 Once the model predicts calibrated fraud probabilities $P(\text{Fraud} \mid X)$, the business must establish operating cutoffs.
 
@@ -476,7 +617,7 @@ In modern fintech, models do not merely binary approve or decline; they route tr
 
 ---
 
-## 5. Sub-5ms Low-Latency Model Serving (Treelite / ONNX)
+## 6. Sub-5ms Low-Latency Model Serving (Treelite / ONNX)
 
 Standard Python/Scikit-Learn/LightGBM model inference takes 10–25ms due to Python runtime overhead, pointer chasing across decision tree nodes, and GIL locking. This is unacceptable inside a 40ms payment gateway budget.
 
@@ -524,7 +665,7 @@ predictor = treelite_runtime.Predictor("./libfraud_model.so", nthread=1)
 
 ---
 
-## 6. Delayed Feedback & Continuous Model Retraining
+## 7. Delayed Feedback & Continuous Model Retraining
 
 The most deceptive aspect of fraud machine learning is **Label Lag**.
 
@@ -557,7 +698,7 @@ Transaction Date (Day 0) ──► First 14 Days: 90% of fraud is UNLABELED (App
 
 ---
 
-## 7. Model Monitoring & Production Kill-Switches
+## 8. Model Monitoring & Production Kill-Switches
 
 ```
 ┌────────────────────────────────────────────────────────────────────────┐
