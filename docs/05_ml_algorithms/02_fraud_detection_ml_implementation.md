@@ -385,11 +385,65 @@ One of the most dangerous production mistakes is evaluating models on artificial
 - If you test on an artificially balanced dataset (e.g., 50% fraud / 50% legit), a model with a 5% false positive rate appears to achieve 90%+ precision. When deployed against the true 0.05% base rate, that exact same model will produce **100 false alarms for every 1 true fraud capture**, completely overwhelming operations review queues.
 
 #### 2. Correcting Probability Distortion from Downsampled Training:
-If you downsampled legitimate transactions in the training set by a factor of `β` (e.g., `β = 0.10` keeping only 10% of negatives) to accelerate tree training:
+If you downsampled legitimate transactions in the training set by a factor of `β` (e.g., `β = 0.10`, keeping only 10% of negatives) to accelerate tree training:
 
 > **p_calibrated = p_sample / [ p_sample + ( (1 - p_sample) / β ) ]**
 
-- At inference time, pass raw model scores through this closed-form Bayes odds-ratio correction to restore true posterior probabilities before evaluating on the un-sampled Out-of-Time test set.
+At inference time, pass raw model scores through this closed-form Bayes odds-ratio correction to restore true posterior probabilities before evaluating on the un-sampled Out-of-Time test set or deploying to production.
+
+---
+
+##### Why Downsampling Negatives is Beneficial in the First Place:
+1. **Computational & Memory Throughput**: Large financial institutions process hundreds of millions of transactions annually with fraud rates around 0.05% (50,000 frauds out of 100,000,000 events). Training GBDT models on all 100 million rows requires massive memory and days of compute. Downsampling negatives by `β = 0.05` reduces the dataset from 100M rows to ~5M rows—slashing training time by 90%+ while retaining **100% of the valuable fraud instances**.
+2. **Gradient Signal Concentration**: In standard cross-entropy loss, 99.95% of transactions are trivial, repetitive legitimate purchases. Summing tens of millions of near-zero negative gradients dilutes the backpropagation signal. Downsampling concentrates gradient updates onto the decision boundary.
+
+##### Why Recalibration is Strictly Necessary:
+1. **Prior Shift & Artificial Score Inflation**: The GBDT optimizes log-loss on the *sampled* distribution. Because negatives were decimated by factor `β`, the model perceives fraud to be roughly `1 / β` times more common than reality (e.g., perceived 0.5% or 5.0% instead of 0.05%). Without recalibration, predicted output probabilities `p_sample` are systematically inflated by ~10x to ~20x!
+2. **Optimal Financial Thresholding (Cost-Sensitive Matrix)**:
+   - In payments, fraud systems do not make decisions on arbitrary rank percentiles; they optimize **Expected Dollar P&L**:
+     - `Expected Net Value = P(Legitimate) * Interchange_Fee - P(Fraud) * Chargeback_Cost`
+   - The theoretical optimal decline threshold is strictly anchored to true probabilities:
+     - `Threshold* = Cost_FP / (Cost_FP + Loss_FN)`
+   - If `p_sample` is artificially inflated by 10x, a transaction with a genuine 0.2% fraud risk will output `p_sample ≈ 2.0%`. If your business policy decline threshold is 1.0%, the uncalibrated model will **falsely decline hundreds of thousands of legitimate cardholders**, causing catastrophic customer friction and interchange revenue loss.
+3. **Multi-Tier Authorization Routing (Step-up / 3DS 2.0)**:
+   - Real-time payment gateways use absolute probability bands to route risk:
+     - `P < 0.001`: Frictionless Auto-Approval
+     - `0.001 ≤ P < 0.02`: Step-Up Challenge (SMS OTP / Biometrics)
+     - `0.02 ≤ P < 0.10`: Manual Queue Review
+     - `P ≥ 0.10`: Hard Auto-Decline
+   - Inflated probabilities will push legitimate cardholders from frictionless approvals straight into disruptive SMS OTP challenges or auto-declines.
+
+##### Mathematical Proof & Bayes Odds-Ratio Derivation:
+Let `S = 1` indicate that a transaction is selected for the training set:
+- Positives (Fraud, `Y = 1`) are retained completely: `P(S = 1 | Y = 1) = 1`
+- Negatives (Legitimate, `Y = 0`) are sampled at rate `β`: `P(S = 1 | Y = 0) = β`
+
+By Bayes' theorem, the posterior odds in the sampled training set are:
+
+```
+Odds_sample = P(Y = 1 | X, S = 1) / P(Y = 0 | X, S = 1)
+            = [ P(S = 1 | Y = 1) * P(Y = 1 | X) ] / [ P(S = 1 | Y = 0) * P(Y = 0 | X) ]
+            = [ 1 * P(Y = 1 | X) ] / [ β * P(Y = 0 | X) ]
+            = (1 / β) * Odds_true
+```
+
+Rearranging gives the exact relationship:
+```
+Odds_true = β * Odds_sample
+```
+
+Converting odds back to probability (`p = Odds / (1 + Odds)`):
+```
+p_calibrated = (β * [p_sample / (1 - p_sample)]) / [ 1 + β * (p_sample / (1 - p_sample)) ]
+```
+
+Dividing numerator and denominator by `β * [p_sample / (1 - p_sample)]` and simplifying yields the closed-form formula:
+
+> **p_calibrated = p_sample / [ p_sample + ( (1 - p_sample) / β ) ]**
+
+- When `β = 1` (no downsampling), `p_calibrated = p_sample`.
+- When `β = 0.10`, `(1 - p_sample) / 0.10 = 10 * (1 - p_sample)`, scaling the probability back down to the true empirical prevalence.
+- **Complexity**: `O(1)` closed-form arithmetic per transaction, adding `< 0.001 ms` to production inference pipelines.
 
 ---
 
