@@ -39,10 +39,10 @@ Payment processing is divided into two decoupled phases: **Real-Time (Auth)** an
 3. **Gateway to Acquirer**: Acquirer formats payload into card network protocol (ISO 8583 / ISO 20022).
 4. **Network Routing**: Card network inspects BIN (Bank Identification Number, first 6-8 digits) to identify the issuer.
 5. **Issuer Decisioning**: Issuing bank checks:
-   - Account status & card expiration.
-   - Available balance / credit line.
-   - Fraud risk score (calculated within 20–100ms via real-time risk engine).
-   - 3D Secure / SCA (Strong Customer Authentication) if applicable.
+    - Account status & card expiration.
+    - Available balance / credit line.
+    - Fraud risk score (calculated within 20–100ms via real-time risk engine).
+    - 3D Secure / SCA (Strong Customer Authentication) if applicable.
 6. **Response Code**: Return approval code (e.g., `00`) or decline reason (`05 - Do Not Honor`, `51 - Insufficient Funds`, `54 - Expired Card`).
 7. **Hold placed**: Ledger reflects pending hold on cardholder's funds; no money actually changes hands yet.
 
@@ -109,8 +109,8 @@ Where does the $2.50 go?
 ### Common Architectural & System Questions:
 1. **Explain the difference between authorization, capture, and settlement.**
 2. **What happens during network tokenization, and why does it improve authorization rates?**
-   - *Answer*: Replaces 16-digit PAN with a cryptographic token issued by the card brand. Automatically updates when a card expires or reissues, reducing false declines and eliminating PAN exposure under PCI DSS.
+    - *Answer*: Replaces 16-digit PAN with a cryptographic token issued by the card brand. Automatically updates when a card expires or reissues, reducing false declines and eliminating PAN exposure under PCI DSS.
 3. **How does smart payment routing increase payment conversion?**
-   - *Answer*: Dynamically routes transaction requests through multiple acquirers based on issuer geography, card brand, historical approval rates, cost optimization, and real-time acquirer health.
+    - *Answer*: Dynamically routes transaction requests through multiple acquirers based on issuer geography, card brand, historical approval rates, cost optimization, and real-time acquirer health.
 4. **How do chargebacks work, and what is the difference between fraud and friendly fraud?**
-   - *Answer*: Chargebacks are issuer-mediated disputes where money is pulled back from the merchant. First-party fraud ("friendly fraud") is when a legitimate cardholder claims they didn't make or authorize a purchase they actually received.
+    - *Answer*: Chargebacks are issuer-mediated disputes where money is pulled back from the merchant. First-party fraud ("friendly fraud") is when a legitimate cardholder claims they didn't make or authorize a purchase they actually received.

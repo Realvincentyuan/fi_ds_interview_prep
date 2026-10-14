@@ -72,8 +72,8 @@ flowchart TD
    $$FL(p_t) = -\alpha_t (1 - p_t)^\gamma \log(p_t)$$
    Down-weights well-classified easy negatives and focuses gradient updates on hard borderline transactions.
 2. **Negative Downsampling with Probability Recalibration**:
-   - Downsample negatives by factor of 10 to speed up training iteration.
-   - Recalibrate raw output probabilities $p_s$ back to true scale $p$ via Bayes' Rule:
+    - Downsample negatives by factor of 10 to speed up training iteration.
+    - Recalibrate raw output probabilities $p_s$ back to true scale $p$ via Bayes' Rule:
      $$p = \frac{p_s}{p_s + \frac{1 - p_s}{\beta}}$$
      where $\beta = \frac{N_{downsampled}}{N_{original}} = 0.1$.
 
@@ -95,5 +95,5 @@ $$\theta^* = \arg\min_{\theta} \left[ \sum_{\text{Txn}} C_{\text{FN}} \cdot \mat
 
 - **Challenge**: Chargeback dispute feedback takes 30–90 days to arrive from Visa/Mastercard.
 - **Mitigation**:
-  - Maintain a **90-day training buffer**: Training sets exclude transactions younger than 90 days to ensure ground-truth labels are fully mature.
-  - For rapid adaptation to emerging attacks, train a **Short-Horizon Target Model** using early proxy signals (e.g., automated fraud report, customer support call inquiries, early decline patterns).
+    - Maintain a **90-day training buffer**: Training sets exclude transactions younger than 90 days to ensure ground-truth labels are fully mature.
+    - For rapid adaptation to emerging attacks, train a **Short-Horizon Target Model** using early proxy signals (e.g., automated fraud report, customer support call inquiries, early decline patterns).

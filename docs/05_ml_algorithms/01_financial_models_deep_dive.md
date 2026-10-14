@@ -43,9 +43,9 @@ For each bin $i$ of a feature $X$:
 - **Good**: Non-defaulting borrowers (favorable outcome).
 - **Bad**: Defaulting borrowers (e.g., 90+ days past due or charge-off).
 - **Interpretation**:
-  - `WOE_i > 0`: Bin contains a higher proportion of good borrowers than bad borrowers (lower credit risk).
-  - `WOE_i < 0`: Bin contains a higher proportion of bad borrowers than good borrowers (higher credit risk).
-  - `WOE_i = 0`: Bin has identical risk to the overall population.
+    - `WOE_i > 0`: Bin contains a higher proportion of good borrowers than bad borrowers (lower credit risk).
+    - `WOE_i < 0`: Bin contains a higher proportion of bad borrowers than good borrowers (higher credit risk).
+    - `WOE_i = 0`: Bin has identical risk to the overall population.
 
 #### 2. Information Value (IV)
 Measures the overall predictive separation power of the variable across all bins:
@@ -66,8 +66,8 @@ To convert logistic regression output into a consumer-facing credit score:
 1. Let log-odds be: **ln(Odds) = ln( P(Good) / P(Bad) ) = β_0 + Σ (β_j × WOE_j)**
 2. Desired score formula: **Score = Offset + Factor × ln(Odds)**
 3. Parameters determined by two business constraints:
-   - **Target Score** (e.g., 600) at **Target Odds** (e.g., 50:1 good-to-bad).
-   - **Points to Double the Odds (PDO)** (e.g., 20 points for odds to double from 50:1 to 100:1).
+    - **Target Score** (e.g., 600) at **Target Odds** (e.g., 50:1 good-to-bad).
+    - **Points to Double the Odds (PDO)** (e.g., 20 points for odds to double from 50:1 to 100:1).
 
 > **Factor = PDO / ln(2)**  
 > **Offset = Target Score - [Factor × ln(Target Odds)]**

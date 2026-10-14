@@ -87,7 +87,7 @@ To understand why CatBoost's Ordered Target Encoding is the gold standard, consi
 #### Worked Failure Scenario in Payment Fraud:
 1. Suppose a new merchant `merchant_xyz` appears in the training set with **only 1 transaction**, and that transaction was fraudulent ($y_1 = 1$).
 2. Greedy Target Encoding computes:
-   - `TS(merchant_xyz) = 1 / 1 = 1.0` (100% fraud rate).
+    - `TS(merchant_xyz) = 1 / 1 = 1.0` (100% fraud rate).
 3. The GBDT tree discovers this feature and creates an aggressive root split: `IF TS ≥ 0.90 THEN PREDICT FRAUD`.
 4. The model essentially memorizes the label $y_1$ via its own feature value!
 5. In production, 50 legitimate transactions arrive at `merchant_xyz`. Because the training set assigned it `TS = 1.0`, the model flags or declines all 50 legitimate customers—causing catastrophic False Positives and merchant attrition.
@@ -130,14 +130,14 @@ Where:
 #### 2. Numerical Walkthrough with Prior Smoothing:
 Let global prior fraud rate `p = 0.001` (0.1%), smoothing weight `a = 2.0`.
 - **First time a merchant appears in the permutation** (count = 0):
-  - `Ordered_TS = [ 0 + (2.0 × 0.001) ] / [ 0 + 2.0 ] = 0.001`
-  - It cleanly defaults to the **global prior**! Zero target leakage.
+    - `Ordered_TS = [ 0 + (2.0 × 0.001) ] / [ 0 + 2.0 ] = 0.001`
+    - It cleanly defaults to the **global prior**! Zero target leakage.
 - **Second time it appears after 1 fraud event** (count = 1, fraud = 1):
-  - `Ordered_TS = [ 1 + (2.0 × 0.001) ] / [ 1 + 2.0 ] = 1.002 / 3.0 = 0.334`
-  - Instead of spiking to 1.0, the smoothing parameter pulls the estimate toward the global baseline, preventing leaf memorization.
+    - `Ordered_TS = [ 1 + (2.0 × 0.001) ] / [ 1 + 2.0 ] = 1.002 / 3.0 = 0.334`
+    - Instead of spiking to 1.0, the smoothing parameter pulls the estimate toward the global baseline, preventing leaf memorization.
 - **High-volume mature merchant** (1,000 transactions, 2 fraud):
-  - `Ordered_TS = [ 2 + (2.0 × 0.001) ] / [ 1,000 + 2.0 ] = 2.002 / 1002 ≈ 0.002`
-  - The sample evidence overwhelms the prior, reflecting the true empirical risk.
+    - `Ordered_TS = [ 2 + (2.0 × 0.001) ] / [ 1,000 + 2.0 ] = 2.002 / 1002 ≈ 0.002`
+    - The sample evidence overwhelms the prior, reflecting the true empirical risk.
 
 #### 3. Why Multiple Permutations Are Mandatory:
 If CatBoost used only a single permutation:
@@ -163,9 +163,9 @@ A critical question in financial data science interviews is:
   df = df.sort_values("transaction_timestamp").reset_index(drop=True)
   ```
 - And you pass `"has_time": True` to `CatBoostClassifier` (or `Pool(..., has_time=True)`):
-  1. CatBoost **disables random permutations**.
-  2. It enforces that sample `i`'s target statistics are computed **strictly from preceding rows** (`j < i`), perfectly mirroring real-world streaming history.
-  3. This completely prevents future look-ahead bias from future fraud attacks leaking into historical baselines.
+    1. CatBoost **disables random permutations**.
+    2. It enforces that sample `i`'s target statistics are computed **strictly from preceding rows** (`j < i`), perfectly mirroring real-world streaming history.
+    3. This completely prevents future look-ahead bias from future fraud attacks leaking into historical baselines.
 
 ---
 
@@ -178,9 +178,9 @@ Fraud attacks rarely manifest along a single categorical dimension. Sophisticate
 #### How CatBoost Constructs Combinations On The Fly:
 1. In standard GBDTs, modeling joint categorical interactions requires manual feature engineering (e.g., string concatenation: `df['device_mcc'] = df['device'] + '_' + df['mcc']`), causing exponential feature space explosion.
 2. CatBoost combines categorical features **dynamically during tree construction**:
-   - At the root split, CatBoost evaluates single features (e.g., split on `mcc_code`).
-   - At subsequent split candidates within that tree branch, CatBoost automatically pairs `mcc_code` with all other categorical features in the dataset (e.g., `mcc_code + device_hash`).
-   - It computes the **Ordered TS for the joint combination on the fly** for that sub-tree!
+    - At the root split, CatBoost evaluates single features (e.g., split on `mcc_code`).
+    - At subsequent split candidates within that tree branch, CatBoost automatically pairs `mcc_code` with all other categorical features in the dataset (e.g., `mcc_code + device_hash`).
+    - It computes the **Ordered TS for the joint combination on the fly** for that sub-tree!
 3. This allows the model to uncover subtle syndicate attack vectors without manual combinatorial feature engineering.
 
 ---
@@ -194,8 +194,8 @@ During real-time production scoring (or testing):
 > **Ordered_TS_production(c) = [ Σ_{j ∈ Train: x_j = c} y_j + (a × p) ] / [ Σ_{j ∈ Train: x_j = c} 1 + a ]**
 
 3. **Discretization to Bins for Sub-Millisecond Lookup**:
-   - During training, CatBoost automatically quantizes continuous Target Statistics into integer bins (e.g., 255 discrete buckets).
-   - In production C++ serving (via CatBoost C++ API or ONNX), evaluating categorical features requires only an $O(1)$ hash table lookup into a pre-binned float array, adding **less than 0.2ms to inference latency**.
+    - During training, CatBoost automatically quantizes continuous Target Statistics into integer bins (e.g., 255 discrete buckets).
+    - In production C++ serving (via CatBoost C++ API or ONNX), evaluating categorical features requires only an $O(1)$ hash table lookup into a pre-binned float array, adding **less than 0.2ms to inference latency**.
 
 ---
 
@@ -400,18 +400,18 @@ At inference time, pass raw model scores through this closed-form Bayes odds-rat
 ##### Why Recalibration is Strictly Necessary:
 1. **Prior Shift & Artificial Score Inflation**: The GBDT optimizes log-loss on the *sampled* distribution. Because negatives were decimated by factor `β`, the model perceives fraud to be roughly `1 / β` times more common than reality (e.g., perceived 0.5% or 5.0% instead of 0.05%). Without recalibration, predicted output probabilities `p_sample` are systematically inflated by ~10x to ~20x!
 2. **Optimal Financial Thresholding (Cost-Sensitive Matrix)**:
-   - In payments, fraud systems do not make decisions on arbitrary rank percentiles; they optimize **Expected Dollar P&L**:
-     - `Expected Net Value = P(Legitimate) * Interchange_Fee - P(Fraud) * Chargeback_Cost`
-   - The theoretical optimal decline threshold is strictly anchored to true probabilities:
-     - `Threshold* = Cost_FP / (Cost_FP + Loss_FN)`
-   - If `p_sample` is artificially inflated by 10x, a transaction with a genuine 0.2% fraud risk will output `p_sample ≈ 2.0%`. If your business policy decline threshold is 1.0%, the uncalibrated model will **falsely decline hundreds of thousands of legitimate cardholders**, causing catastrophic customer friction and interchange revenue loss.
+    - In payments, fraud systems do not make decisions on arbitrary rank percentiles; they optimize **Expected Dollar P&L**:
+        - `Expected Net Value = P(Legitimate) * Interchange_Fee - P(Fraud) * Chargeback_Cost`
+    - The theoretical optimal decline threshold is strictly anchored to true probabilities:
+        - `Threshold* = Cost_FP / (Cost_FP + Loss_FN)`
+    - If `p_sample` is artificially inflated by 10x, a transaction with a genuine 0.2% fraud risk will output `p_sample ≈ 2.0%`. If your business policy decline threshold is 1.0%, the uncalibrated model will **falsely decline hundreds of thousands of legitimate cardholders**, causing catastrophic customer friction and interchange revenue loss.
 3. **Multi-Tier Authorization Routing (Step-up / 3DS 2.0)**:
-   - Real-time payment gateways use absolute probability bands to route risk:
-     - `P < 0.001`: Frictionless Auto-Approval
-     - `0.001 ≤ P < 0.02`: Step-Up Challenge (SMS OTP / Biometrics)
-     - `0.02 ≤ P < 0.10`: Manual Queue Review
-     - `P ≥ 0.10`: Hard Auto-Decline
-   - Inflated probabilities will push legitimate cardholders from frictionless approvals straight into disruptive SMS OTP challenges or auto-declines.
+    - Real-time payment gateways use absolute probability bands to route risk:
+        - `P < 0.001`: Frictionless Auto-Approval
+        - `0.001 ≤ P < 0.02`: Step-Up Challenge (SMS OTP / Biometrics)
+        - `0.02 ≤ P < 0.10`: Manual Queue Review
+        - `P ≥ 0.10`: Hard Auto-Decline
+    - Inflated probabilities will push legitimate cardholders from frictionless approvals straight into disruptive SMS OTP challenges or auto-declines.
 
 ##### Mathematical Proof & Bayes Odds-Ratio Derivation:
 Let `S = 1` indicate that a transaction is selected for the training set:
@@ -738,17 +738,17 @@ Transaction Date (Day 0) ──► First 14 Days: 90% of fraud is UNLABELED (App
 ### Production Strategies for Label Delay:
 
 1. **The Mature Observation Window (Lagged Training)**:
-   - Train supervised models strictly on transactions that are **older than 60–90 days**, ensuring the Good vs. Bad label distribution has matured.
+    - Train supervised models strictly on transactions that are **older than 60–90 days**, ensuring the Good vs. Bad label distribution has matured.
 2. **Semi-Supervised / Positive-Unlabeled (PU) Learning**:
-   - For transactions in the recent 14-day window:
-     - Confirmed fraud ($Y = 1$) is a reliable positive label.
-     - Unconfirmed transactions are treated as **unlabeled**, not confirmed negatives ($Y = 0$).
-     - Apply Elkan-Noto PU learning or EM-based re-weighting to update models on recent data without mislabeling undiscovered fraud.
+    - For transactions in the recent 14-day window:
+        - Confirmed fraud ($Y = 1$) is a reliable positive label.
+        - Unconfirmed transactions are treated as **unlabeled**, not confirmed negatives ($Y = 0$).
+        - Apply Elkan-Noto PU learning or EM-based re-weighting to update models on recent data without mislabeling undiscovered fraud.
 3. **Shadow Mode & Canary Rollout**:
-   - Never replace a live fraud model instantaneously.
-   - Run the new candidate model in **Shadow Mode** for 14 days, scoring live production traffic in parallel without taking automated actions.
-   - Compare score distributions, correlation with the production champion model, and early fraud alert velocity.
-   - Ramp up traffic: `5%` → `20%` → `50%` → `100%`.
+    - Never replace a live fraud model instantaneously.
+    - Run the new candidate model in **Shadow Mode** for 14 days, scoring live production traffic in parallel without taking automated actions.
+    - Compare score distributions, correlation with the production champion model, and early fraud alert velocity.
+    - Ramp up traffic: `5%` → `20%` → `50%` → `100%`.
 
 ---
 

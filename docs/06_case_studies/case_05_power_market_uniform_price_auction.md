@@ -85,16 +85,16 @@ flowchart TD
 ```
 
 1. **Demand-Side Visibility**:
-   - In auction markets, demand is often price-inelastic in real time. We must know the exact procurement target (`1,700 kW`) to identify where on the supply curve the market will clear.
+    - In auction markets, demand is often price-inelastic in real time. We must know the exact procurement target (`1,700 kW`) to identify where on the supply curve the market will clear.
 2. **Competitor Supply Stack (Merit Order)**:
-   - Identify competitor available capacities and **short-run marginal costs (SRMC)**.
-   - *Critical distinction between fixed and marginal costs*: Sunk fixed capital investments (amortization, debt service) do not affect short-run bidding order. In competitive clearing, bids should reflect marginal operating costs (fuel, variable O&M) plus any strategic markup.
+    - Identify competitor available capacities and **short-run marginal costs (SRMC)**.
+    - *Critical distinction between fixed and marginal costs*: Sunk fixed capital investments (amortization, debt service) do not affect short-run bidding order. In competitive clearing, bids should reflect marginal operating costs (fuel, variable O&M) plus any strategic markup.
 3. **The Pivotal Supplier Test & Residual Demand**:
-   - Total competitor capacity cheaper than A is:
+    - Total competitor capacity cheaper than A is:
      $$\text{Capacity}_{D+B+C} = 300 + 600 + 600 = 1,500\text{ kW}$$
-   - Residual demand facing Plant A is:
+    - Residual demand facing Plant A is:
      $$\text{Residual Demand}_A = \text{Demand} - \text{Capacity}_{D+B+C} = 1,700 - 1,500 = 200\text{ kW}$$
-   - Because residual demand is strictly positive (`> 0`), **Plant A is a Pivotal Supplier**. The market operator *must* clear at least `200 kW` from Plant A (or more expensive peakers) to avoid grid failure. Plant A has unilateral power to set the market clearing price.
+    - Because residual demand is strictly positive (`> 0`), **Plant A is a Pivotal Supplier**. The market operator *must* clear at least `200 kW` from Plant A (or more expensive peakers) to avoid grid failure. Plant A has unilateral power to set the market clearing price.
 
 ---
 
@@ -125,9 +125,9 @@ flowchart TD
 #### Option C: Strategic Profit-Maximizing Bid (Bid `7.0¢` or `6.99¢`)
 - **Market Dynamic**: The next cheapest available capacity is **Plant E (`100 kW @ 7.0¢`)**.
 - **Clearing Mechanics**:
-  - If Plant A bids just below E (`6.99¢`, or `7.0¢` under tie-breaking priority):
-  - D (`300`) + B (`600`) + C (`600`) = `1,500 kW`.
-  - Plant A supplies the remaining `200 kW`. Plant E is excluded.
+    - If Plant A bids just below E (`6.99¢`, or `7.0¢` under tie-breaking priority):
+    - D (`300`) + B (`600`) + C (`600`) = `1,500 kW`.
+    - Plant A supplies the remaining `200 kW`. Plant E is excluded.
 - **Clearing Price ($P^*$)**: `7.0¢/kW`.
 - **Plant A Volume**: `200 kW`.
 - **Plant A Unit Margin**: `7.0¢ - 4.0¢ = 3.0¢/kW`.
@@ -138,10 +138,10 @@ flowchart TD
 #### Option D: Overbidding Pressure Test (Bid `8.0¢`)
 - **Market Dynamic**: If Plant A bids `8.0¢`, it becomes more expensive than Plant E (`7.0¢`).
 - **Clearing Mechanics**:
-  - Plant E (`100 kW @ 7.0¢`) enters the dispatch queue before Plant A!
-  - Dispatched units: D (`300`) + B (`600`) + C (`600`) + E (`100`) = `1,600 kW`.
-  - Remaining deficit: `1,700 - 1,600 = 100 kW`.
-  - Plant A is dispatched for only `100 kW` (the final unit needed).
+    - Plant E (`100 kW @ 7.0¢`) enters the dispatch queue before Plant A!
+    - Dispatched units: D (`300`) + B (`600`) + C (`600`) + E (`100`) = `1,600 kW`.
+    - Remaining deficit: `1,700 - 1,600 = 100 kW`.
+    - Plant A is dispatched for only `100 kW` (the final unit needed).
 - **Clearing Price ($P^*$)**: `8.0¢/kW` (set by Plant A).
 - **Plant A Volume**: `100 kW` (suffered a `50%` volume loss).
 - **Plant A Unit Margin**: `8.0¢ - 4.0¢ = 4.0¢/kW`.
@@ -262,9 +262,9 @@ gantt
 - Bidding `9.0¢` results in **`$30.00`**, which is **`$4.00` worse** than bidding `8.0¢` (`$34.00`).
 - **The Core Flaw**: By bidding `9.0¢`, Plant A completely surrendered its **pricing power to competitor Plant F**. Because Plant F is willing to produce at `8.0¢`, Plant F sets the price ceiling at `8.0¢` while stealing Plant A's remaining `100 kW` volume.
 - To achieve the maximum portfolio profit of **`$34.00`**, Plant A must bid **`8.0¢`** itself (or `7.99¢`):
-  - It permits Plant E (`7.0¢`) to enter.
-  - It sets the clearing price at `8.0¢`.
-  - It supplies the final `100 kW` needed, **locking out competitor Plant F** and capturing the final `$4.00` on Plant A!
+    - It permits Plant E (`7.0¢`) to enter.
+    - It sets the clearing price at `8.0¢`.
+    - It supplies the final `100 kW` needed, **locking out competitor Plant F** and capturing the final `$4.00` on Plant A!
 
 ---
 
@@ -285,15 +285,15 @@ In a decentralized corporate structure:
 - **Plant A's General Manager**: Performance bonus is tied to Plant A's standalone P&L. Plant A's GM will fight fiercely to bid `7.0¢` (capturing `$6.00` profit) and will actively refuse to bid `8.0¢` (which cuts their division's profit to `$4.00`).
 - **Plant B's General Manager**: Would love Plant A to bid `8.0¢` because Plant B gets a free `+$6.00` windfall without lifting a finger.
 - **The Senior Business Manager Solution**:
-  - Implement a corporate **Transfer Pricing / Cross-Subsidization Mechanism**: Plant B transfers `$3.00` of its `+$6.00` windfall to Plant A.
-  - Both divisions now show higher net P&L (Plant A makes `$7.00`, Plant B makes `$27.00`), perfectly aligning divisional incentives with overall enterprise value creation.
+    - Implement a corporate **Transfer Pricing / Cross-Subsidization Mechanism**: Plant B transfers `$3.00` of its `+$6.00` windfall to Plant A.
+    - Both divisions now show higher net P&L (Plant A makes `$7.00`, Plant B makes `$27.00`), perfectly aligning divisional incentives with overall enterprise value creation.
 
 ### 2. Antitrust & Market Manipulation Risks (Economic Withholding)
 In regulated markets (FERC, FTC, state public utility commissions):
 - Intentionally bidding an asset above its marginal cost or withholding generation capacity to artificially inflate market clearing prices for affiliate units is classified as **Economic Withholding / Market Manipulation**.
 - Regulators apply the **Conduct & Impact Test**:
-  - *Conduct*: Did the generator bid substantially above its reference marginal cost?
-  - *Impact*: Did this bid cause a material increase in the market clearing price?
+    - *Conduct*: Did the generator bid substantially above its reference marginal cost?
+    - *Impact*: Did this bid cause a material increase in the market clearing price?
 - Penalties include disgorgement of profits, multimillion-dollar fines, and revocation of market-based rate authority.
 
 ### 3. Application to Capital One & Fintech Strategy

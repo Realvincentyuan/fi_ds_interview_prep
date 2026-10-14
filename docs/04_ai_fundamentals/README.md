@@ -56,9 +56,9 @@ flowchart LR
 1. **Hybrid Retrieval**: Combine dense semantic embeddings (cosine similarity over HNSW index) with sparse keyword search (BM25) via Reciprocal Rank Fusion (RRF) to capture exact transaction codes and account IDs.
 2. **Cross-Encoder Reranking**: Vector retrieval fetches top 50 candidates; a lightweight cross-encoder (e.g., BGE-reranker) computes joint token attention to narrow to top 5 highly relevant chunks.
 3. **Evaluation Framework (The RAG Triad)**:
-   - **Context Relevance**: Does the retrieved context actually address the query?
-   - **Groundedness / Faithfulness**: Is the generated response strictly supported by the context without hallucination?
-   - **Answer Relevance**: Does the generated answer directly fulfill the user's prompt?
+    - **Context Relevance**: Does the retrieved context actually address the query?
+    - **Groundedness / Faithfulness**: Is the generated response strictly supported by the context without hallucination?
+    - **Answer Relevance**: Does the generated answer directly fulfill the user's prompt?
 
 ---
 

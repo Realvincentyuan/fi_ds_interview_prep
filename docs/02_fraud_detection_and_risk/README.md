@@ -76,10 +76,10 @@ Real-time fraud models rely heavily on **velocity** and **behavioral delta** fea
 ### 1. Extreme Class Imbalance (0.01% - 0.5% fraud rate)
 - **Do NOT rely on accuracy**: A model predicting all 0s has 99.9% accuracy but 0 utility.
 - **Resampling Trade-offs**:
-  - Downsampling negatives: Speeds up training, but alters baseline predicted probabilities → requires Platt scaling / probability recalibration:
+    - Downsampling negatives: Speeds up training, but alters baseline predicted probabilities → requires Platt scaling / probability recalibration:
     $$p = \frac{p_s}{p_s + \frac{1 - p_s}{\beta}}$$
     where $\beta$ is downsampling ratio, $p_s$ is sampled probability.
-  - SMOTE / ADASYN: Often introduces noise in high-dimensional tabular data.
+    - SMOTE / ADASYN: Often introduces noise in high-dimensional tabular data.
 - **Cost-Sensitive Learning**: Penalize False Negatives (fraud slip-through = monetary loss + chargeback fee) significantly more than False Positives (customer insult / friction):
   $$L = - \sum \left( C_{FN} \cdot y \log(p) + C_{FP} \cdot (1-y) \log(1-p) \right)$$
 
@@ -120,6 +120,6 @@ graph TD
 ## 6. Interview Quick Fire: Common Risk Questions
 
 1. **How do you trade off False Positives vs. False Negatives?**
-   - *Answer*: Compute dollar impact. FN cost = transaction amount + chargeback fee ($15-$25) + operational handling + risk of network fines (if dispute rate exceeds 0.9% / 100 bps). FP cost = lost interchange margin + customer lifetime value (LTV) drop due to customer insult. Set decision thresholds using cost curves.
+    - *Answer*: Compute dollar impact. FN cost = transaction amount + chargeback fee ($15-$25) + operational handling + risk of network fines (if dispute rate exceeds 0.9% / 100 bps). FP cost = lost interchange margin + customer lifetime value (LTV) drop due to customer insult. Set decision thresholds using cost curves.
 2. **How do you address concept drift and adversarial fraud patterns?**
-   - *Answer*: Continuous shadow deployment of challenger models, daily population stability index (PSI) tracking on features, online rule adjustments for zero-day attack vectors, and automated retraining pipelines with mature label windows.
+    - *Answer*: Continuous shadow deployment of challenger models, daily population stability index (PSI) tracking on features, online rule adjustments for zero-day attack vectors, and automated retraining pipelines with mature label windows.

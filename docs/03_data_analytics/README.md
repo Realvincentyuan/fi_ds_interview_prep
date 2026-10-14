@@ -135,7 +135,7 @@ Testing payment flows, checkout UX, or fraud thresholds differs fundamentally fr
   $$\hat{Y}_{CUPED} = Y - \theta (X - \mathbb{E}[X]), \quad \text{where } \theta = \frac{\operatorname{Cov}(Y, X)}{\operatorname{Var}(X)}$$
   This often shrinks needed sample size by 30–50%!
 - **Network Spillover in Two-Sided Marketplaces**: If testing a new incentive for P2P payments or merchant checkout, treatment users interact with control users.
-  - *Fix*: Use cluster-based randomization (e.g., randomize by geographic market or merchant vertical).
+    - *Fix*: Use cluster-based randomization (e.g., randomize by geographic market or merchant vertical).
 
 ### 2. Decision Framework: Guardrail Metrics
 When evaluating a treatment variant (e.g., "Relax 3DS challenge on low-risk transactions"):

@@ -58,8 +58,8 @@ For each transaction with context vector $x_t \in \mathbb{R}^d$ (encoding card s
 ## 5. Network Tokenization & Account Updater
 
 - **Network Tokens**: Converting PANs into tokens issued directly by Visa (VTS) or Mastercard (MDES).
-  - Issuer recognizes that the token is merchant-bound → lowers fraud risk → yields **2–3% higher authorization rate**.
-  - Expiration dates and replacement card numbers are automatically updated by the network in real-time when physical cards are replaced or reissued.
+    - Issuer recognizes that the token is merchant-bound → lowers fraud risk → yields **2–3% higher authorization rate**.
+    - Expiration dates and replacement card numbers are automatically updated by the network in real-time when physical cards are replaced or reissued.
 
 ---
 
