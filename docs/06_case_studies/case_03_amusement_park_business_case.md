@@ -222,20 +222,24 @@ The interviewer nods:
 ### Step 2: Modeling the "Loss Scenario" (The Downside Trap)
 
 If we lose the land to our rival:
+
 1. **Attendance Drops 35%**:
-   - Visits fall from 1,600,000 to **1,040,000 visits**
+    - Visits fall from 1,600,000 to **1,040,000 visits**
+
 2. **Revenue Drops**:
-   - Admissions ($48/visit): 1,040,000 × `$48` = `$49,920,000`
-   - In-Park Spend ($10/visit): 1,040,000 × `$10` = `$10,400,000`
-   - **Total Revenue** = `$49.92M` + `$10.40M` = `$60,320,000` (down from $80M)
+    - Admissions ($48/visit): 1,040,000 × `$48` = `$49,920,000`
+    - In-Park Spend ($10/visit): 1,040,000 × `$10` = `$10,400,000`
+    - **Total Revenue** = `$49.92M` + `$10.40M` = `$60,320,000` (down from $80M)
+
 3. **Costs**:
-   - Variable Costs ($15/visit): 1,040,000 × `$15` = `$15,600,000`
-   - Fixed Costs: Unchanged at `$20,000,000` (ride maintenance, full-time staff, fixed debt cannot be cut quickly)
-   - Defensive Marketing & Price Wars: Park must spend an extra `$5M` in advertising and discounting to defend against the rival ⟹ **Fixed Costs = `$25,000,000`**
-   - **Total Costs** = `$15.6M` + `$25.0M` = `$40,600,000`
+    - Variable Costs ($15/visit): 1,040,000 × `$15` = `$15,600,000`
+    - Fixed Costs: Unchanged at `$20,000,000` (ride maintenance, full-time staff, fixed debt cannot be cut quickly)
+    - Defensive Marketing & Price Wars: Park must spend an extra `$5M` in advertising and discounting to defend against the rival ⟹ **Fixed Costs = `$25,000,000`**
+    - **Total Costs** = `$15.6M` + `$25.0M` = `$40,600,000`
+
 4. **Profit in Worst-Case Scenario**:
-   - In some competitive versions where prices are cut aggressively, profit crashes to `-$5.0M (Negative / Bankruptcy risk)`!
-   - Let's take the realistic competitive outcome: Operating profit collapses from `+$36M to +$4M`, or into negative territory if debt service is fixed.
+    - In some competitive versions where prices are cut aggressively, profit crashes to `-$5.0M (Negative / Bankruptcy risk)`!
+    - Let's take the realistic competitive outcome: Operating profit collapses from `+$36M to +$4M`, or into negative territory if debt service is fixed.
 
 ---
 
