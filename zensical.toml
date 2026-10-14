@@ -32,6 +32,7 @@ nav = [
       { "Case 2: Smart Payment Routing Optimization" = "06_case_studies/case_02_payment_routing_authorization.md" },
       { "Case 3: Amusement Park P&L & Bidding Strategy" = "06_case_studies/case_03_amusement_park_business_case.md" },
       { "Case 4: Co-Working Space Unit Economics" = "06_case_studies/case_04_coworking_space_business_case.md" },
+      { "Case 5: Uniform-Price Auction & Game Theory" = "06_case_studies/case_05_power_market_uniform_price_auction.md" },
   ]},
 ]
 
