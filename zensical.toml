@@ -3,6 +3,8 @@ site_name = "Payments, Risk & AI Interview Prep Portal"
 site_description = "Executive interview preparation portal for Payment Networks, Acquirers, Fraud Risk, Analytics, and AI Systems."
 site_author = "Vincent Yuan"
 docs_dir = "docs"
+repo_url = "https://github.com/Realvincentyuan/fi_ds_interview_prep"
+repo_name = "Realvincentyuan/fi_ds_interview_prep"
 extra_javascript = [
   "javascripts/mathjax.js",
   "https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js",
