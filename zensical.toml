@@ -36,6 +36,8 @@ nav = [
       { "Case 4: Co-Working Space Unit Economics" = "06_case_studies/case_04_coworking_space_business_case.md" },
       { "Case 5: Uniform-Price Auction & Game Theory" = "06_case_studies/case_05_power_market_uniform_price_auction.md" },
       { "Case 6: Mobile Gaming App Freemium & Cannibalization" = "06_case_studies/case_06_mobile_gaming_freemium_cannibalization.md" },
+      { "Case 7: Credit Card Streaming Video Ad Campaign" = "06_case_studies/case_07_streaming_ad_campaign_credit_card.md" },
+      { "Case 8: Credit Card P&L, Tiering & DB Outage" = "06_case_studies/case_08_credit_card_tier_segmentation_database_glitch.md" },
   ]},
 ]
 

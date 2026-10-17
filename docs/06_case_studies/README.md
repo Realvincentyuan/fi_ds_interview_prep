@@ -29,6 +29,8 @@ flowchart TD
 | **[Case 04: Co-Working Space Unit Economics & Frontier](case_04_coworking_space_business_case.md)** | Pricing Strategy & Break-Even Modeling | Hourly to subscription shift, adverse selection diagnostic, 2D break-even frontier whiteboard graphing | Senior Business Manager, Business Analyst, Strategy Director |
 | **[Case 05: Uniform-Price Auction & Merit Order Game Theory](case_05_power_market_uniform_price_auction.md)** | Microeconomics, Pricing & Auction Game Theory | Supply stack construction, pivotal supplier market power, portfolio bidding & cannibalization, principal-agent alignment | Senior Business Manager, Director of Strategy, Quantitative Product Manager |
 | **[Case 06: Mobile Gaming App: Freemium vs. Paid & 3-Cohort Break-Even](case_06_mobile_gaming_freemium_cannibalization.md)** | Product Pricing & Cannibalization Modeling | Ad yield vs. IAP, 10% freemium conversion proof, 3-cohort behavioral defection, unified app architecture | Senior Business Manager, Business Analyst, Strategy Director |
+| **[Case 07: Credit Card Streaming Video Ad Campaign: Skippable vs. Non-Skippable](case_07_streaming_ad_campaign_credit_card.md)** | Marketing Analytics & CAC Optimization | Acquisition funnel conversion math, skippable ad break-even hurdle rate, reach vs. intent trade-offs | Senior Business Manager, Growth Analyst, Marketing Data Scientist |
+| **[Case 08: Credit Card P&L Turnaround, Tier Segmentation & Database Outage](case_08_credit_card_tier_segmentation_database_glitch.md)** | Portfolio Management & Incident Analytics | Monolithic -$40M P&L turnaround, 25% premium tier break-even migration, 3-month DB outage cohort leakage | Senior Business Manager, Business Analyst, Financial Analyst |
 
 ---
 
