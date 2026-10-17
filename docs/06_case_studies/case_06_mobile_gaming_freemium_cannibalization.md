@@ -21,6 +21,7 @@ flowchart TD
 ```
 
 This case study is a classic quantitative problem frequently asked in **Capital One Business Analyst / Senior Business Manager (SBM)** and top-tier tech product strategy interviews. It tests:
+
 1. **End-to-End Evaluation Framework**: Assessing launch viability beyond simple revenue and cost.
 2. **P&L Profitability Modeling**: Calculating unit economics across downloads, in-app purchases (IAP), ad yield, and customer acquisition cost (CAC).
 3. **Cannibalization Analysis**: Quantifying what happens when free and paid options coexist in the same market.
@@ -89,8 +90,10 @@ A top-tier strategy answer structures the decision into five pillars:
 ### Mathematical Breakdown
 
 #### 1. Free-to-Download Version Economics
+
 - **User Base ($N_{\text{free}}$)**: `200,000` users.
 - **Revenue Components**:
+
   - *Download Revenue*: $200,000 \times \$0.00 = \$0.00$.
   - *In-App Purchase (IAP) Revenue*:
     $$\text{IAP Rev} = 200,000\text{ users} \times 1\text{ purchase} \times \$1.00 = \$200,000$$
@@ -99,16 +102,21 @@ A top-tier strategy answer structures the decision into five pillars:
     > **Ad Revenue per User**: $55\text{ hrs} \times \$0.02/\text{hr} = \mathbf{\$1.10 / user}$.
   - *Total Free Revenue*:
     $$\text{Rev}_{\text{free}} = \$0 + \$200,000 + \$220,000 = \mathbf{\$420,000} \quad (\mathbf{\$2.10 / user})$$
+
 - **Cost Components**:
+
   - *Marketing Cost*: $200,000\text{ users} \times \$0.10/\text{user} = \mathbf{\$20,000}$.
+
 - **Net Profit (Free Version)**:
   $$\Pi_{\text{free}} = \text{Revenue} - \text{Cost} = \$420,000 - \$20,000 = \mathbf{\$400,000} \quad (\mathbf{\$2.00 / user})$$
 
 ---
 
 #### 2. Paid-Download Version Economics
+
 - **User Base ($N_{\text{paid}}$)**: `50,000` users.
 - **Revenue Components**:
+
   - *Download Revenue*:
     $$\text{Download Rev} = 50,000\text{ users} \times \$10.00 = \$500,000$$
   - *In-App Purchase (IAP) Revenue*:
@@ -117,8 +125,11 @@ A top-tier strategy answer structures the decision into five pillars:
     $$\text{Ad Rev} = 50,000\text{ users} \times 55\text{ hours} \times \$0.00/\text{hour} = \$0.00$$
   - *Total Paid Revenue*:
     $$\text{Rev}_{\text{paid}} = \$500,000 + \$150,000 + \$0 = \mathbf{\$650,000} \quad (\mathbf{\$13.00 / user})$$
+
 - **Cost Components**:
+
   - *Marketing Cost*: $50,000\text{ users} \times \$1.00/\text{user} = \mathbf{\$50,000}$.
+
 - **Net Profit (Paid Version)**:
   $$\Pi_{\text{paid}} = \text{Revenue} - \text{Cost} = \$650,000 - \$50,000 = \mathbf{\$600,000} \quad (\mathbf{\$12.00 / user})$$
 
@@ -144,7 +155,9 @@ A top-tier strategy answer structures the decision into five pillars:
 > *"Can we simply release both apps simultaneously to capture both audiences? What happens if they coexist? If we combine them into a single app, what percentage of users must convert to the paid tier to match our $600k profit benchmark?"*
 
 ### 1. Market Dynamics of Simultaneous Launch (Cannibalization)
+
 Releasing two separate versions of the same title creates severe friction:
+
 1. **Downside Cannibalization**: Price-sensitive gamers who would have paid `$10` will substitute into the free version. Every user who downgrades destroys **`$10.00` of net margin** (`$12.00` paid profit $\rightarrow$ `$2.00` free profit).
 2. **App Store Ranking Dilution**: Splitting marketing spend across two App Store URLs fragments download velocity, depressing organic chart rankings for both.
 3. **Consumer Frustration**: Paying `$10` for an app and seeing friends play the same game for free triggers negative App Store reviews.
@@ -293,13 +306,16 @@ Under full behavioral degradation, the studio can tolerate up to **`80%` canniba
 ## 7. Question 6: Strategic Recommendations to Maximize Profit
 
 ### 1. Reject Dual App Store Listings; Deploy a Unified "Hybrid Freemium" Architecture
+
 Launching two separate app listings is an operational anti-pattern:
+
 - **Solution**: Publish **one single Free-to-Download app** on the App Store to maximize top-of-funnel reach (`200,000+` downloads) and secure #1 rankings on the Top Free charts.
-- Offer an in-app upgrade: **"Ad-Free Pro Pass" for `$9.99`**.
+- **In-App Monetization**: Offer an in-app upgrade: **"Ad-Free Pro Pass" for `$9.99`**.
 
 ---
 
 ### 2. Feature Gating & Value Architecture
+
 To convert the required `10%+` of users into paid spenders without angering free players, create sharp product differentiation:
 
 ```mermaid
@@ -322,12 +338,17 @@ flowchart TD
 ---
 
 ### 3. Monetize the "Middle 90%" with Rewarded Video Ads
-- Traditional interstitial banner ads earn only `$0.02/hour`.
-- Introduce **Opt-In Rewarded Ads** (*"Watch a 30-second video to revive without losing progress"* or *"Double your match rewards"*).
-- Rewarded video ads command industry eCPMs of **`$25–$45`** (equivalent to **`$0.05–$0.08 / hour`**), lifting the baseline profit of the 180k free users from `$400k` to over **`$600k`** on ad revenue alone!
+
+Traditional banner and interstitial ads underperform in engagement:
+
+- **Opt-In Rewarded Ads**: Introduce rewarded video placements (*"Watch a 30-second video to revive without losing progress"* or *"Double your match rewards"*).
+- **Substantial eCPM Lift**: Rewarded video ads command industry eCPMs of **`$25–$45`** (equivalent to **`$0.05–$0.08 / hour`**), lifting the baseline profit of the 180k free users from `$400k` to over **`$600k`** on ad revenue alone!
 
 ---
 
 ### 4. Dynamic Pricing & Elasticity Testing
-- Run localized A/B price elasticity tests on the Pro Pass (`$4.99` vs. `$9.99` vs. `$14.99`).
-- In developing markets with low credit card penetration, a `$4.99` price point can increase conversion from `10%` to `25%`, expanding total gross margin.
+
+Optimize monetization across diverse geographies:
+
+- **Price Elasticity Testing**: Run localized A/B price elasticity tests on the Pro Pass (`$4.99` vs. `$9.99` vs. `$14.99`).
+- **Emerging Market Expansion**: In developing markets with low credit card penetration, a `$4.99` price point can increase conversion from `10%` to `25%`, expanding total gross margin.
