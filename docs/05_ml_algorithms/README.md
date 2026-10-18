@@ -43,6 +43,17 @@ This directory is organized into a sequential learning curriculum tailored for Q
     - Probability Calibration (Platt Scaling vs. Isotonic Regression)
     - Reject Inference, Algorithmic Recourse & Purged TimeSeriesSplit
 
+-   :material-numeric-4-box: **[04. Graph Neural Networks for Fraud Detection](04_graph_neural_networks_fraud_detection.md)**
+
+    ---
+
+    **Relational ML, Syndicate Detection & Network Topology**:
+    - Message Passing Neural Network (MPNN) propagation mechanics: Message, Aggregate, Update
+    - GCN vs GraphSAGE vs GAT vs Care-GNN for adversarial fraud
+    - Over-smoothing theorem and multi-hop receptive field decay ($K=2$ standard)
+    - Mitigating 4 types of Information Leakage: Temporal lookahead, Label leakage, Super-node contamination, and Camouflage
+    - Production asynchronous graph embedding serving (<35ms point-of-sale hybrid architecture)
+
 </div>
 
 ---

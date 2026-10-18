@@ -23,6 +23,7 @@ nav = [
           { "01. Financial Models Deep Dive" = "05_ml_algorithms/01_financial_models_deep_dive.md" },
           { "02. Fraud Detection ML Implementation" = "05_ml_algorithms/02_fraud_detection_ml_implementation.md" },
           { "03. Data Science Interview Q&A" = "05_ml_algorithms/03_data_science_interview_qa.md" },
+          { "04. Graph Neural Networks for Fraud" = "05_ml_algorithms/04_graph_neural_networks_fraud_detection.md" },
       ]},
   ]},
   { "AI & LLM Agents" = [
@@ -38,6 +39,7 @@ nav = [
       { "Case 6: Mobile Gaming App Freemium & Cannibalization" = "06_case_studies/case_06_mobile_gaming_freemium_cannibalization.md" },
       { "Case 7: Credit Card Streaming Video Ad Campaign" = "06_case_studies/case_07_streaming_ad_campaign_credit_card.md" },
       { "Case 8: Credit Card P&L, Tiering & DB Outage" = "06_case_studies/case_08_credit_card_tier_segmentation_database_glitch.md" },
+      { "Case 9: Default Collections & Cannibalization" = "06_case_studies/case_09_debt_collections_cannibalization_breakeven.md" },
   ]},
 ]
 
