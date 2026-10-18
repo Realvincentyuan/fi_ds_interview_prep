@@ -155,7 +155,167 @@ $$\lim_{K \to \infty} \mathbf{h}_v^{(K)} = \mathbf{h}_u^{(K)} = \mathbf{c} \quad
 
 ---
 
-## 5. Information Leakage in Financial Graphs: Taxonomy & Root Causes
+## 5. Explicit Graph Construction from PII & Tabular Data (The Enterprise Recipe)
+
+A common challenge in production is: **"We have tabular transaction/account data with dozens of fields. How do we explicitly construct a graph using only specific, authorized PII attributes (e.g., SSN, phone, address, device) while strictly excluding forbidden or low-entropy attributes?"**
+
+```mermaid
+flowchart TD
+    RawData["Raw Tabular Data<br/>(Account ID, SSN, Phone, Address, Zip, Device, Amount, Income)"] --> Filter["1. PII Selection & Entropy Gating<br/>• ALLOW: SSN, Phone, Physical Address, Device ID<br/>• BAN: Zip Code, State, Email Domain, User-Agent"]
+    
+    Filter --> Crypto["2. Cryptographic Salted Hashing<br/>HMAC-SHA256(PII, Secret_Salt)<br/>Zero Plaintext PII in Graph Engine"]
+    
+    Crypto --> Hetero["3. Heterogeneous Graph Assembly<br/>Build PyG HeteroData with Typed Bipartite Edges"]
+    
+    Hetero --> Nodes["Typed Node Partitions:<br/>• Primary: Account (Tabular Features x_v)<br/>• PII Entities: SSN, Phone, Address, Device (ID-only)"]
+    
+    Hetero --> Edges["Typed Directed Edges:<br/>• (Account, HAS_SSN, SSN) & (SSN, REV_HAS_SSN, Account)<br/>• (Account, HAS_PHONE, Phone) & reverse<br/>• (Account, HAS_DEVICE, Device) & reverse"]
+```
+
+---
+
+### Step 1: The PII Entropy & Privacy Selection Framework
+
+Not all PII should be converted into graph nodes. In banking risk, we evaluate candidate attributes across two axes: **Information Entropy** (uniqueness) and **Compliance / Privacy Sensitivity**.
+
+| PII Attribute | Graph Node Status | Cardinality / Entropy | Risk of Hub Explosion | Why Allowed or Forbidden |
+| :--- | :--- | :--- | :--- | :--- |
+| **SSN / Tax ID** | **ALLOWED (Top Priority)** | Extreme ($1:1$ or $1:\text{few}$) | Near Zero | Primary anchor for First-Party Fraud & synthetic identity detection. |
+| **Device Fingerprint** | **ALLOWED** | Very High | Very Low | Connects burner accounts to the same hardware chassis. |
+| **Phone Number (E.164)** | **ALLOWED** | High | Low | Catches multi-application fraud rings; requires E.164 normalization. |
+| **Physical Address (Full)** | **ALLOWED (With Unit #)**| High | Low | Must include apartment/suite; street-only creates apartment complex hubs! |
+| **Zip Code / Postal Code** | **STRICTLY FORBIDDEN** | Extremely Low ($1:50,000$) | **Catastrophic Hub** | Connecting users by Zip code merges 50,000 unrelated residents into a super-clique. |
+| **Email Domain (`@gmail.com`)**| **STRICTLY FORBIDDEN** | Near Zero ($1:10^8$) | **System Failure** | Creates a super-node connecting 100M+ users. |
+| **Browser User-Agent** | **STRICTLY FORBIDDEN** | Low ($1:10^5$) | **Severe Hub** | Millions share the same Chrome/macOS build string. |
+
+---
+
+### Step 2: Cryptographic Tokenization (HMAC-SHA256 with Rotating Salt)
+
+To prevent data exfiltration and comply with GDPR / CCPA, **raw PII must never exist as plaintext node IDs or attributes in the GNN store**:
+* Use **HMAC-SHA256** with an enterprise Hardware Security Module (HSM) salt.
+* **Deterministic Equality**: Preserves identity matching ($\text{SSN}_A == \text{SSN}_B \iff \text{Hash}_A == \text{Hash}_B$) without storing actual Social Security Numbers.
+
+$$\text{Node\_ID}_{\text{SSN}} = \text{HMAC-SHA256}\left(\text{Normalize}(\text{SSN}), \text{Key}_{\text{salt}}\right)$$
+
+---
+
+### Step 3: Complete PyG Implementation (`torch_geometric.data.HeteroData`)
+
+Here is how to ingest a raw tabular pandas DataFrame and construct a production-ready **Heterogeneous Graph** restricted exclusively to approved PII:
+
+```python
+"""
+Explicit Heterogeneous Graph Construction from Tabular Data in PyTorch Geometric.
+Only authorized PII (SSN, Phone, Device) is converted into entity nodes.
+"""
+
+import hmac
+import hashlib
+import torch
+import pandas as pd
+import numpy as np
+from torch_geometric.data import HeteroData
+
+def hash_pii(val: str, salt: bytes = b"enterprise_secret_salt_2026") -> str:
+    """Cryptographically hash normalized PII using HMAC-SHA256."""
+    if pd.isna(val) or val == "":
+        return None
+    normalized = str(val).strip().lower()
+    return hmac.new(salt, normalized.encode('utf-8'), hashlib.sha256).hexdigest()[:16]
+
+def build_pii_hetero_graph(df: pd.DataFrame, feature_cols: list) -> HeteroData:
+    """
+    Takes tabular transaction/application dataframe and builds a HeteroData object.
+    
+    Columns expected:
+    - account_id: Unique primary identifier
+    - ssn: Raw SSN
+    - phone: Raw Phone number
+    - device_id: Raw Device hardware fingerprint
+    - target: Binary label (0 = legit, 1 = fraud)
+    - feature_cols: Tabular non-PII features (e.g., credit_score, income, amount)
+    """
+    data = HeteroData()
+    
+    # 1. Cryptographically hash allowed PII
+    df = df.copy()
+    df['ssn_hash'] = df['ssn'].apply(hash_pii)
+    df['phone_hash'] = df['phone'].apply(hash_pii)
+    df['device_hash'] = df['device_id'].apply(hash_pii)
+    
+    # 2. Build Zero-Indexed ID Mappings for Primary & PII Entities
+    account_map = {acc_id: i for i, acc_id in enumerate(df['account_id'].unique())}
+    
+    unique_ssns = [s for s in df['ssn_hash'].dropna().unique()]
+    ssn_map = {ssn: i for i, ssn in enumerate(unique_ssns)}
+    
+    unique_phones = [p for p in df['phone_hash'].dropna().unique()]
+    phone_map = {phone: i for i, phone in enumerate(unique_phones)}
+    
+    unique_devices = [d for d in df['device_hash'].dropna().unique()]
+    device_map = {dev: i for i, dev in enumerate(unique_devices)}
+    
+    # 3. Populate Node Tensors
+    # Account Nodes: Hold non-PII tabular features (x) and labels (y)
+    acc_features = torch.tensor(df[feature_cols].values, dtype=torch.float)
+    acc_labels = torch.tensor(df['target'].values, dtype=torch.long)
+    data['account'].x = acc_features
+    data['account'].y = acc_labels
+    data['account'].num_nodes = len(account_map)
+    
+    # PII Entity Nodes: Structural connectors (initialized with learned embeddings or zero tensors)
+    data['ssn'].num_nodes = len(ssn_map)
+    data['ssn'].x = torch.zeros((len(ssn_map), 16), dtype=torch.float)  # Structural anchor
+    
+    data['phone'].num_nodes = len(phone_map)
+    data['phone'].x = torch.zeros((len(phone_map), 16), dtype=torch.float)
+    
+    data['device'].num_nodes = len(device_map)
+    data['device'].x = torch.zeros((len(device_map), 16), dtype=torch.float)
+    
+    # 4. Build Typed Bipartite Edges (Forward & Reverse)
+    def extract_edges(src_col, src_map, dst_col, dst_map):
+        valid = df[[src_col, dst_col]].dropna()
+        src_indices = [src_map[val] for val in valid[src_col]]
+        dst_indices = [dst_map[val] for val in valid[dst_col]]
+        edge_index = torch.tensor([src_indices, dst_indices], dtype=torch.long)
+        rev_edge_index = torch.tensor([dst_indices, src_indices], dtype=torch.long)
+        return edge_index, rev_edge_index
+
+    # Edges: Account <-> SSN
+    e_acc_ssn, e_ssn_acc = extract_edges('account_id', account_map, 'ssn_hash', ssn_map)
+    data['account', 'has_ssn', 'ssn'].edge_index = e_acc_ssn
+    data['ssn', 'rev_has_ssn', 'account'].edge_index = e_ssn_acc
+    
+    # Edges: Account <-> Phone
+    e_acc_phone, e_phone_acc = extract_edges('account_id', account_map, 'phone_hash', phone_map)
+    data['account', 'has_phone', 'phone'].edge_index = e_acc_phone
+    data['phone', 'rev_has_phone', 'account'].edge_index = e_phone_acc
+    
+    # Edges: Account <-> Device
+    e_acc_dev, e_dev_acc = extract_edges('account_id', account_map, 'device_hash', device_map)
+    data['account', 'uses_device', 'device'].edge_index = e_acc_dev
+    data['device', 'rev_uses_device', 'account'].edge_index = e_dev_acc
+    
+    return data
+```
+
+---
+
+### Step 4: Relation-Specific Attention (Controlling PII Information Flow)
+
+Once the heterogeneous graph is constructed, an **RGCN** or **Heterogeneous Graph Transformer (HGT)** applies separate learnable parameter matrices for each PII relation type:
+
+$$\mathbf{m}_{v}^{(k)} = \sum_{r \in \mathcal{R}} \alpha_r \sum_{u \in \mathcal{N}_r(v)} \mathbf{W}_r \mathbf{h}_u^{(k-1)}$$
+
+* **High Risk Penalty**: The model learns a massive weight for $\mathbf{W}_{\text{has\_ssn}}$ (two accounts sharing an SSN indicates near-certain identity theft).
+* **Moderate Risk Penalty**: The model learns a lower weight for $\mathbf{W}_{\text{has\_phone}}$ (family members sharing a plan).
+* This **explicitly controls information propagation per PII type**, ensuring high-confidence PII drives the fraud score while noisy PII is systematically downweighted.
+
+---
+
+## 6. Information Leakage in Financial Graphs: Taxonomy & Root Causes
 
 While standard academic graph benchmarks (Cora, Citeseer) assume static, closed-world graphs, **financial production graphs suffer from severe information leakage** that renders models deceptively accurate offline but useless in production.
 
@@ -169,7 +329,7 @@ flowchart TD
 
 ---
 
-## 6. Vector 1: Temporal Information Leakage (Lookahead Bias)
+## 7. Vector 1: Temporal Information Leakage (Lookahead Bias)
 
 ### The Problem
 In financial systems, edges and labels arrive asynchronously over time:
@@ -209,7 +369,7 @@ To prevent lookahead leakage, enforce a strict **Time-Respecting Dynamic Graph**
 
 ---
 
-## 7. Vector 2: Super-Node / Hub Contamination (High-Degree Entities)
+## 8. Vector 2: Super-Node / Hub Contamination (High-Degree Entities)
 
 ### The Problem
 In payment networks, certain entities possess massive out-degrees:
@@ -250,7 +410,7 @@ During mini-batch generation (e.g., via GraphSAGE NeighborSampler), set a hard d
 
 ---
 
-## 8. Vector 3: Label Leakage & Neighbor Target Contamination
+## 9. Vector 3: Label Leakage & Neighbor Target Contamination
 
 ### The Problem
 In semi-supervised node classification, researchers frequently include neighbor label indicators (e.g., `"fraction of neighbors with confirmed fraud"`) as features in the node feature vector $\mathbf{x}_u$.
@@ -267,7 +427,7 @@ In semi-supervised node classification, researchers frequently include neighbor 
 
 ---
 
-## 9. Vector 4: Adversarial Camouflage & Network Heterophily
+## 10. Vector 4: Adversarial Camouflage & Network Heterophily
 
 ### The Problem
 Sophisticated fraudsters actively study fraud detection rules and deliberately execute **Adversarial Camouflage**:
@@ -313,7 +473,7 @@ flowchart TD
 
 ---
 
-## 10. Production Implementation: Causal Dynamic GraphSAGE in PyTorch Geometric
+## 11. Production Implementation: Causal Dynamic GraphSAGE in PyTorch Geometric
 
 Below is a production-grade implementation of an inductive, temporal-safe Graph Neural Network equipped with **degree-based hub suppression** and **ego-skip connections**:
 
@@ -428,7 +588,7 @@ class FullFraudGNNClassifier(nn.Module):
 
 ---
 
-## 11. Production Architecture & Sub-50ms Serving Latency
+## 12. Production Architecture & Sub-50ms Serving Latency
 
 A common interview hurdle: *"GNN message passing requires gathering multi-hop neighbors. How can you score a credit card transaction in under 50ms at point-of-sale?"*
 
@@ -459,7 +619,7 @@ flowchart TD
 
 ---
 
-## 12. Interview Defense: 5 High-Yield GNN Risk Questions
+## 13. Interview Defense: 5 High-Yield GNN Risk Questions
 
 ### Q1: *"Why not simply use Graph Centrality features (PageRank, Degree, Triangle Counts) inside XGBoost instead of deploying a complex GNN?"*
 > **Candidate Answer**:  
