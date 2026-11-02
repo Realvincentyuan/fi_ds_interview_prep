@@ -40,6 +40,7 @@ nav = [
       { "Case 7: Credit Card Streaming Video Ad Campaign" = "06_case_studies/case_07_streaming_ad_campaign_credit_card.md" },
       { "Case 8: Credit Card P&L, Tiering & DB Outage" = "06_case_studies/case_08_credit_card_tier_segmentation_database_glitch.md" },
       { "Case 9: Default Collections & Cannibalization" = "06_case_studies/case_09_debt_collections_cannibalization_breakeven.md" },
+      { "Case 10: Bike Food Delivery Unit Economics" = "06_case_studies/case_10_bike_food_delivery_unit_economics.md" },
   ]},
 ]
 
