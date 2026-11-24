@@ -8,8 +8,8 @@ This is a classic **Capital One / McKinsey / Tech Strategy Product Launch & Cann
   1. **Unit Margin Dilution (Cannibalization)**: Every existing customer who switches from a Regular Burger (`$3.00` contribution margin) to a Vegan Burger (`$2.00` contribution margin) destroys `$1.00` of contribution margin.
   2. **Incremental Fixed Overhead**: Adding `$60M/year` in staff training and `$2.25M/month` (`$27M/year`) in supplier fees adds `$87M/year` in new fixed hurdles.
 * **Key Quantitative Takeaways**:
-  * **Q2 (Standalone Projection at `$5` Price)**: `120M` vegan burgers at `$5` price (`$3` unit margin) less `$87M` fixed cost yields **`+$273M` incremental profit**.
-  * **Q4 (Regular Only vs. `2:3` Vegan:Regular Mix at `$4` Price & `120M` Volume)**: Blended contribution margin drops from **`$3.00/burger`** to **`$2.60/burger`**, and net profit per burger (after the `$87M` vegan fixed cost) plunges from **`$3.00/burger`** to **`$1.875/burger`** (a `-$1.125/burger` or `-$135M` profit drop).
+  * **Q2 (Standalone Projection at `$5` Price)**: `120M` vegan burgers at `$5` price (`$3` unit margin) less `$87M` fixed cost yields **`+$273M` incremental profit** (**`$2.275 / burger`** net profit).
+  * **Q4 (`2:3` Vegan:Regular Mix at `$4` Price & `120M` Volume)**: Blended gross contribution margin is **`$2.60/burger`**, and net profit per burger (after the `$87M` vegan fixed cost) is **`$1.875/burger`** (`$225M` total)—which is **`-$0.40/burger` (`-$48M`) lower than the Q2 forecast (`$2.275/burger`)**, and **`-$1.125/burger` (`-$135M`) lower than selling `120M` Regular Burgers Only (`$3.00/burger`, `$360M`)**.
   * **Q6 (Year 2 Break-Even Volume to Match Year 1 Profit Dollars of `$318M`)**: Requires **`300M` total burgers** (`120M` Vegan + `180M` Regular)—a **`+29.9%` (`+69M` burger) volume surge** over Year 1's `231M` regular burgers.
   * **Q7 & Q8 (Year 1 Profit Margin & Year 2 Volume to Maintain `34.42%` Profit Margin)**: Year 1 Profit Margin is **`34.42%`** (`$318M / $924M`). Because Vegan Burgers have a higher cost-to-price ratio, maintaining a **`34.42%` percentage margin** in Year 2 requires **`377.64M` total burgers** (`+63.5%` volume growth).
 
@@ -103,7 +103,7 @@ $$\Pi_{\text{vegan}} = \text{Total CM} - \text{FC}_{\text{vegan}} = \$360\text{M
 
 ---
 
-## 5. Question 4: Comparing Average Profit per Burger Across Two Scenarios
+## 5. Question 4: Comparing Average Profit per Burger Across Scenarios
 
 > **Prompt**: *Now we are given updated numbers:*
 >
@@ -112,51 +112,48 @@ $$\Pi_{\text{vegan}} = \text{Total CM} - \text{FC}_{\text{vegan}} = \$360\text{M
 > * *Sales Mix Ratio (Vegan : Regular) = `2 : 3`*
 > * *Projected Year 1 Total Volume = `120M burgers`, Supplier Fee = `$2.25M/month` (`$27M/year`), Training Fee = `$60M/year`*
 >
-> *Calculate the difference in Average Profit per Burger between Scenario A (Selling Regular Burgers Only) and Scenario B (Selling Both Burgers at the `2:3` ratio).*
+> *Calculate the Average Profit per Burger under this mixed scenario and compare it against (1) your Step 1/Q2 standalone forecast and (2) the true Status Quo baseline of selling Regular Burgers only.*
 
-### 1. Unit Contribution Margins
+### 1. Why Candidates Get Confused Here (The Two Benchmarks to Compare Against)
 
-* **Regular Burger Contribution Margin ($\text{CM}_R$)**:
+In the live interview, after you calculate **Q2 (`120M` Vegan Burgers at `$5.00` price = `$273M` profit or `$2.275 / burger`)**, the interviewer gives you the **Q4 Mixed Scenario (`120M` total burgers split `2:3` Vegan:Regular at `$4.00` price)** and asks you to compare the average profit per burger.
 
-$$\text{CM}_R = \$4.00 - \$1.00 = \mathbf{\$3.00 \text{ / burger}}$$
+A top-1% candidate immediately points out that there are **two distinct comparisons**—and that comparing Q4 only against Q2 is a trap when moving to Q5 ("Should we sell both?"):
 
-* **Vegan Burger Contribution Margin ($\text{CM}_V$)**:
+1. **Comparison 1 — Forecast Revision (`Q4 Mixed @ $4` vs. `Q2 Vegan-Only @ $5`)**:
+   * In Q2, we naively assumed `120M` Vegan Burgers sold at `$5.00` (`$3.00` unit contribution margin, or **`$2.275 / burger` net of the `$87M` fixed cost**).
+   * In Q4, the Vegan Burger price drops from `$5.00` to `$4.00` (`$2.00` unit margin) across `40%` of the `120M` volume (`48M` Vegan) while `60%` (`72M` Regular) earns `$3.00` unit margin. Because both Q2 and Q4 incur the `$87M` (`$0.725/burger`) vegan fixed cost, the average net profit per burger drops by **`-$0.40 / burger`** (from **`$2.275`** in Q2 down to **`$1.875`** in Q4, a `-$48M` drop from `$273M` to `$225M`).
+2. **Comparison 2 — True Strategic Baseline (`Q4 Mixed @ $4` vs. `Status Quo Regular-Only @ $4`)**:
+   * **Crucial Strategic Insight**: Q2 ("Selling `120M` Vegan Burgers Only at `$5`") was never the company's real baseline—we are an existing burger chain selling **Regular Burgers**!
+   * If we instead sell **`120M` Regular Burgers Only** (`$4.00` price, `$1.00` cost), we earn **`$3.00 / burger` in gross contribution margin** AND we **avoid the `$87M` (`$0.725/burger`) vegan fixed cost entirely**, netting **`$3.00 / burger` (`$360M` total profit)**.
+   * Therefore, compared to **selling Regular Burgers only (`$3.00 / burger`)**, launching the Vegan Burger at a fixed `120M` volume (`$1.875 / burger`) actually destroys **`-$1.125 / burger`** (`-$135M` total profit): **`-$0.40 / burger`** from cannibalizing beef margins plus **`-$0.725 / burger`** from the new vegan fixed overhead!
 
-$$\text{CM}_V = \$4.00 - \$2.00 = \mathbf{\$2.00 \text{ / burger}}$$
+### 2. Step-by-Step Math for All Three Benchmarks (at `120M` Total Burgers)
 
-* **Sales Mix Shares (`2 : 3` Ratio)**:
-  * **Vegan Share ($w_V$)**: $\frac{2}{2 + 3} = \frac{2}{5} = \mathbf{40\%}$ (`48M` burgers out of `120M`)
-  * **Regular Share ($w_R$)**: $\frac{3}{2 + 3} = \frac{3}{5} = \mathbf{60\%}$ (`72M` burgers out of `120M`)
+* **Unit Contribution Margins at `$4.00` Price Parity**:
+  * **Regular Burger ($\text{CM}_R$)**: $\$4.00 - \$1.00 = \mathbf{\$3.00 \text{ / burger}}$ (`60%` of mix = `72M` units)
+  * **Vegan Burger ($\text{CM}_V$)**: $\$4.00 - \$2.00 = \mathbf{\$2.00 \text{ / burger}}$ (`40%` of mix = `48M` units)
 
-### 2. Scenario Comparison at `120M` Total Burgers
-
-* **Scenario A (Regular Burgers Only — `120M` Regular Burgers)**:
-  * **Total Contribution / Operating Profit**: $120\text{M} \times \$3.00 = \$360\text{M}$
-  * **Average Profit per Burger**:
-
-$$\text{Avg Profit}_A = \mathbf{\$3.00 \text{ / burger}}$$
-
-* **Scenario B (Both Burgers at `2:3` Mix — `48M` Vegan + `72M` Regular)**:
+* **Q4 Mixed Scenario (`2:3` Vegan:Regular Mix at `$4.00` Price)**:
   1. **Blended Contribution Margin per Burger (Before Fixed Costs)**:
 
-$$\overline{\text{CM}}_B = (0.40 \times \$2.00) + (0.60 \times \$3.00) = \$0.80 + \$1.80 = \mathbf{\$2.60 \text{ / burger}}$$
+$$\overline{\text{CM}}_{\text{mixed}} = \left(\frac{2}{5} \times \$2.00\right) + \left(\frac{3}{5} \times \$3.00\right) = \$0.80 + \$1.80 = \mathbf{\$2.60 \text{ / burger}}$$
 
-     *(Total Contribution Margin = $120\text{M} \times \$2.60 = \$312\text{M}$, already `$48M` lower than Scenario A due to `-$0.40/burger` mix dilution).*
-  2. **Net Profit After Vegan Incremental Fixed Costs (`$87M`)**:
+  2. **Vegan Fixed Cost per Burger**:
 
-$$\text{Total Net Profit}_B = \$312\text{M} - (\$60\text{M} + \$27\text{M}) = \$312\text{M} - \$87\text{M} = \mathbf{\$225\text{M}}$$
+$$\text{FC}_{\text{vegan per unit}} = \frac{\$60\text{M} + \$27\text{M}}{120\text{M burgers}} = \frac{\$87\text{M}}{120\text{M}} = \mathbf{\$0.725 \text{ / burger}}$$
 
-  3. **Average Net Profit per Burger (After Fixed Costs)**:
+  3. **Average Net Profit per Burger (After Vegan Fixed Costs)**:
 
-$$\text{Avg Net Profit}_B = \frac{\$225\text{M}}{120\text{M burgers}} = \$2.60 - \frac{\$87\text{M}}{120\text{M}} = \$2.60 - \$0.725 = \mathbf{\$1.875 \text{ / burger}}$$
+$$\text{Avg Net Profit}_{\text{mixed}} = \$2.60 - \$0.725 = \mathbf{\$1.875 \text{ / burger}} \quad (\$225\text{M total profit})$$
 
-| Metric (`120M` Total Burgers) | Scenario A: Regular Only (`100%` Regular) | Scenario B: Both (`40%` Vegan / `60%` Regular) | Difference (`B vs. A`) |
-| :--- | :---: | :---: | :---: |
-| **Regular / Vegan Units** | `120M` Reg / `0` Vegan | `72M` Reg / `48M` Vegan | `-48M` Reg / `+48M` Vegan |
-| **Gross Contribution Margin / Burger** | **`$3.00`** | **`$2.60`** | **`-$0.40 / burger`** (`-$48M`) |
-| **Vegan Fixed Cost / Burger (`$87M / 120M`)** | `$0.00` | `$0.725` | **`-$0.725 / burger`** (`-$87M`) |
-| **Net Profit per Burger** | **`$3.00`** | **`$1.875`** | **`-$1.125 / burger`** (`-$135M`) |
-| **Total Operating Profit** | **`$360M`** | **`$225M`** | **`-$135M` (`-37.5%`)** |
+| Metric (`120M` Total Burgers) | 1. Step 1 / Q2 Forecast (`100%` Vegan @ `$5`) | 2. Status Quo Baseline (`100%` Regular @ `$4`) | 3. Q4 Mixed Scenario (`2:3` Vegan:Reg @ `$4`) | Diff vs. Q2 (`3 - 1`) | Diff vs. Regular Only (`3 - 2`) |
+| :--- | :---: | :---: | :---: | :---: | :---: |
+| **Regular / Vegan Units** | `0` Reg / `120M` Vegan | `120M` Reg / `0` Vegan | `72M` Reg / `48M` Vegan | `+72M` Reg / `-72M` Veg | `-48M` Reg / `+48M` Veg |
+| **Gross Contribution / Burger** | **`$3.00`** (`$5 - $2`) | **`$3.00`** (`$4 - $1`) | **`$2.60`** (Blended) | **`-$0.40 / burger`** | **`-$0.40 / burger`** (`-$48M`) |
+| **Vegan Fixed Cost / Burger** | `$0.725` (`$87M / 120M`) | **`$0.00`** (No Vegan FC) | `$0.725` (`$87M / 120M`) | `$0.00 / burger` | **`-$0.725 / burger`** (`-$87M`) |
+| **Net Profit per Burger** | **`$2.275`** | **`$3.000`** | **`$1.875`** | **`-$0.400 / burger`** | **`-$1.125 / burger`** |
+| **Total Profit (`120M` Units)** | **`$273M`** | **`$360M`** | **`$225M`** | **`-$48M`** | **`-$135M`** |
 
 ---
 
